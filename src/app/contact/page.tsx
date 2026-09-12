@@ -20,6 +20,8 @@ export default function ContactPage() {
     <div className="pt-40 pb-20 md:pt-52">
       <SectionHeading
         index={1}
+        as="h1"
+        immediate
         eyebrow="Commissions"
         lines={contactPage.lines}
         className="gutter"

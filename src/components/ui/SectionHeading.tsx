@@ -10,6 +10,13 @@ type Props = {
   lines: readonly string[];
   children?: ReactNode;
   className?: string;
+  /**
+   * Heading level. Pass `"h1"` when this is the page's title — every page
+   * needs exactly one, and on the home page the hero already owns it.
+   */
+  as?: "h1" | "h2";
+  /** Animate on mount rather than on scroll — for headings above the fold. */
+  immediate?: boolean;
 };
 
 /** Numbered editorial section header used across every page. */
@@ -19,6 +26,8 @@ export default function SectionHeading({
   lines,
   children,
   className,
+  as = "h2",
+  immediate = false,
 }: Props) {
   return (
     <div className={cn(className)}>
@@ -28,6 +37,8 @@ export default function SectionHeading({
       </Reveal>
 
       <SplitText
+        as={as}
+        immediate={immediate}
         lines={lines}
         className="font-display text-display font-light text-bone"
       />

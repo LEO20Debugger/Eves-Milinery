@@ -32,14 +32,16 @@ export default function Nav() {
   const panelRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
 
-  // Close on navigation.
-  useEffect(() => setOpen(false), [pathname]);
+  // The panel closes from the link handlers below rather than by reacting to
+  // the pathname, so there is no render-then-correct pass on every navigation.
 
   // Escape to close, and trap focus inside the panel while it is open.
   useEffect(() => {
     if (!open) return;
 
     const previous = document.activeElement as HTMLElement | null;
+    // Captured now — by cleanup time the ref may point elsewhere.
+    const toggle = toggleRef.current;
     document.body.style.overflow = "hidden";
 
     const onKeyDown = (event: KeyboardEvent) => {
@@ -75,7 +77,7 @@ export default function Nav() {
       document.removeEventListener("keydown", onKeyDown);
       window.clearTimeout(timer);
       document.body.style.overflow = "";
-      (previous ?? toggleRef.current)?.focus?.();
+      (previous ?? toggle)?.focus?.();
     };
   }, [open]);
 
@@ -148,6 +150,7 @@ export default function Nav() {
                   >
                     <Link
                       href={item.href}
+                      onClick={() => setOpen(false)}
                       className="group flex items-baseline gap-4 font-display text-display-sm font-light text-bone"
                     >
                       <span className="eyebrow text-gold">{pad(index + 1)}</span>

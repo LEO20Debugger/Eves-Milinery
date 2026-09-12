@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import {
   useScroll,
   useSpring,
@@ -30,21 +30,28 @@ export function useScrollVelocityFactor(): MotionValue<number> {
   return useTransform(smoothed, [-2200, 0, 2200], [-1, 0, 1], { clamp: true });
 }
 
+const FINE_POINTER = "(hover: hover) and (pointer: fine)";
+
+function subscribeToPointer(onChange: () => void) {
+  const query = window.matchMedia(FINE_POINTER);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
 /**
  * True only on devices with a real pointer. The custom cursor, the hover
  * preview list and the magnetic buttons are all meaningless on touch and are
  * skipped entirely rather than degraded.
+ *
+ * `useSyncExternalStore` is the right tool here: matchMedia is an external
+ * store, and this reads it without a render-then-correct pass. The server
+ * snapshot is `false`, so the markup React sends always assumes touch and the
+ * pointer-only extras are added after hydration.
  */
 export function useHasFinePointer() {
-  const [fine, setFine] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(hover: hover) and (pointer: fine)");
-    setFine(query.matches);
-    const onChange = (event: MediaQueryListEvent) => setFine(event.matches);
-    query.addEventListener("change", onChange);
-    return () => query.removeEventListener("change", onChange);
-  }, []);
-
-  return fine;
+  return useSyncExternalStore(
+    subscribeToPointer,
+    () => window.matchMedia(FINE_POINTER).matches,
+    () => false,
+  );
 }

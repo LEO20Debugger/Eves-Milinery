@@ -48,12 +48,19 @@ export default function Preloader() {
     }
     if (!shouldShow) return;
 
-    setActive(true);
+    // The panel is painted by the first animation frame rather than by a
+    // synchronous setState here, so there is no cascading render on mount.
     document.body.style.overflow = "hidden";
 
     const start = performance.now();
     let frame = 0;
+    let opened = false;
+
     const tick = (now: number) => {
+      if (!opened) {
+        opened = true;
+        setActive(true);
+      }
       const progress = Math.min(1, (now - start) / DURATION_MS);
       // Ease-out so the number decelerates into 100 rather than snapping.
       setCount(Math.round((1 - Math.pow(1 - progress, 3)) * 100));

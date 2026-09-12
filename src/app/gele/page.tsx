@@ -23,6 +23,8 @@ export default function GelePage() {
     <div className="pt-40 md:pt-52">
       <SectionHeading
         index={1}
+        as="h1"
+        immediate
         eyebrow={gelePage.eyebrow}
         lines={gelePage.lines}
         className="gutter"
