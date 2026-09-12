@@ -42,7 +42,7 @@ export default function GelePage() {
           ))}
 
           <Reveal delay={0.3}>
-            <p className="mt-10 border-l border-gold/40 pl-6 text-sm text-bone-faint italic">
+            <p className="mt-10 border-l border-accent/40 pl-6 text-sm text-bone-faint italic">
               {gelePage.note}
             </p>
           </Reveal>
@@ -64,7 +64,7 @@ export default function GelePage() {
       {/* The horizontal run — the one place on the site that scrolls sideways. */}
       <section className="mt-32">
         <Reveal className="mb-12 flex items-center gap-4 border-b rule pb-4 gutter">
-          <span className="eyebrow text-gold">02</span>
+          <span className="eyebrow text-accent">02</span>
           <span className="eyebrow text-bone-dim">Crowns in the archive</span>
         </Reveal>
 

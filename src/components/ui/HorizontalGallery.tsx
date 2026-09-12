@@ -75,7 +75,7 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
               </div>
 
               <div className="mt-5 flex items-baseline gap-4">
-                <span className="eyebrow text-gold">{pad(index + 1)}</span>
+                <span className="eyebrow text-accent">{pad(index + 1)}</span>
                 <span className="font-display text-3xl font-light text-bone">{piece.name}</span>
               </div>
               <p className="mt-2 text-sm text-bone-dim">{piece.tagline}</p>

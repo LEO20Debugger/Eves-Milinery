@@ -105,7 +105,7 @@ export default function Home() {
 
           <div>
             <Reveal className="mb-8 flex items-center gap-4 border-b rule pb-4">
-              <span className="eyebrow text-gold">02</span>
+              <span className="eyebrow text-accent">02</span>
               <span className="eyebrow text-bone-dim">{gelePage.eyebrow}</span>
             </Reveal>
 

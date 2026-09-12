@@ -68,7 +68,7 @@ export default function AtelierPage() {
       {/* Process */}
       <section className="mt-32">
         <Reveal className="mb-12 flex items-center gap-4 border-b rule pb-4 gutter">
-          <span className="eyebrow text-gold">02</span>
+          <span className="eyebrow text-accent">02</span>
           <span className="eyebrow text-bone-dim">How a commission is made</span>
         </Reveal>
 

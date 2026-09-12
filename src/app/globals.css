@@ -1,18 +1,35 @@
 @import "tailwindcss";
 
 /* ── Design tokens ────────────────────────────────────────────────────────
-   Eve's Millinery runs a single fixed editorial palette. The site is not
-   theme-switchable by design: the dark ground IS the brand.
+   Eve's Millinery runs a single fixed editorial palette: jewel tones on a
+   deep aubergine ground. The site is not theme-switchable by design — the
+   plum ground IS the brand.
+
+   Every accent below has been checked at 4.5:1 or better against
+   `--color-ink`, so any of them is safe for body-size text.
    ────────────────────────────────────────────────────────────────────── */
 @theme {
-  --color-ink: #0b0a09;
-  --color-ink-soft: #141210;
-  --color-ink-raised: #1c1917;
-  --color-bone: #ede7dd;
-  --color-bone-dim: #a49d92;
-  --color-bone-faint: #6b655d;
-  --color-gold: #b08d57;
-  --color-gold-soft: #c9a877;
+  /* Ground */
+  --color-ink: #1a0e1b;
+  --color-ink-soft: #221426;
+  --color-ink-raised: #2a1729;
+
+  /* Type */
+  --color-bone: #f5ede8;
+  --color-bone-dim: #b9a3b4;
+  --color-bone-faint: #9a8397;
+
+  /* Jewel accents. `--color-accent` is the one components reference; the
+     named hues exist so a page can reassign it (see `.accent-*` below). */
+  --color-accent: #e0457b;
+  --color-fuchsia: #e0457b;
+  --color-marigold: #f2a03d;
+  --color-emerald: #2e8b7a;
+
+  /* Gold is reserved for hairlines and small decorative marks, so it never
+     competes with whichever jewel tone a page is running on. */
+  --color-gold: #d4af6a;
+  --color-gold-soft: #e3c68c;
 
   --font-display: var(--font-cormorant), "Times New Roman", serif;
   --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
@@ -57,12 +74,12 @@
   }
 
   ::selection {
-    background-color: var(--color-gold);
-    color: var(--color-ink);
+    background-color: var(--color-accent);
+    color: var(--color-bone);
   }
 
   :focus-visible {
-    outline: 1px solid var(--color-gold);
+    outline: 1px solid var(--color-accent);
     outline-offset: 4px;
   }
 
@@ -105,7 +122,26 @@
   }
 
   .rule {
-    border-color: color-mix(in srgb, var(--color-bone) 12%, transparent);
+    border-color: color-mix(in srgb, var(--color-bone) 14%, transparent);
+  }
+
+  /* Per-page accent.
+     Every accent utility in the app resolves to `var(--color-accent)`, so
+     reassigning that variable on a wrapper re-tints a whole page — eyebrows,
+     hover states, underline wipes, focus rings and progress marks — without
+     touching a single component. Applied per route in PageTransition.
+     Nav and Footer sit outside it and stay on the default fuchsia. */
+  .accent-fuchsia {
+    --color-accent: var(--color-fuchsia);
+  }
+  .accent-marigold {
+    --color-accent: var(--color-marigold);
+  }
+  .accent-emerald {
+    --color-accent: var(--color-emerald);
+  }
+  .accent-gold {
+    --color-accent: var(--color-gold);
   }
 
   /* Page gutter. Wide margins are doing a lot of the "expensive" work. */

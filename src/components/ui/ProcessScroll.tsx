@@ -52,7 +52,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
               />
             </div>
             <div>
-              <span className="eyebrow text-gold">{pad(i + 1)}</span>
+              <span className="eyebrow text-accent">{pad(i + 1)}</span>
               <h3 className="mt-4 font-display text-4xl font-light text-bone">{step.title}</h3>
               <p className="mt-4 text-bone-dim">{step.body}</p>
             </div>
@@ -89,7 +89,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
             {/* Progress rule across the foot of the image. */}
             <div className="absolute inset-x-0 bottom-0 h-px bg-bone/20">
               <motion.div
-                className="h-full origin-left bg-gold"
+                className="h-full origin-left bg-accent"
                 animate={{ scaleX: (index + 1) / steps.length }}
                 transition={{ duration: 0.6, ease: EXPO_OUT }}
                 style={{ width: "100%" }}
@@ -100,7 +100,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
           {/* Copy. Only the active step is shown, crossfading in place — the
               column is a fixed height so nothing below it ever shifts. */}
           <div className="relative">
-            <span className="eyebrow text-gold">
+            <span className="eyebrow text-accent">
               {pad(index + 1)} / {pad(steps.length)}
             </span>
 

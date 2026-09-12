@@ -17,7 +17,7 @@ function SwapLabel({ children, className }: { children: string; className?: stri
       </span>
       <span
         aria-hidden
-        className="absolute inset-0 block translate-y-full text-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0"
+        className="absolute inset-0 block translate-y-full text-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0"
       >
         {children}
       </span>
@@ -99,7 +99,7 @@ export default function Nav() {
                 href={item.href}
                 className={cn(
                   "group eyebrow text-bone",
-                  pathname.startsWith(item.href) && "text-gold",
+                  pathname.startsWith(item.href) && "text-accent",
                 )}
               >
                 <SwapLabel>{item.label}</SwapLabel>
@@ -153,7 +153,7 @@ export default function Nav() {
                       onClick={() => setOpen(false)}
                       className="group flex items-baseline gap-4 font-display text-display-sm font-light text-bone"
                     >
-                      <span className="eyebrow text-gold">{pad(index + 1)}</span>
+                      <span className="eyebrow text-accent">{pad(index + 1)}</span>
                       <SwapLabel>{item.label}</SwapLabel>
                     </Link>
                   </motion.span>

@@ -24,7 +24,7 @@ export default function PieceDetail({ piece, related }: Props) {
     <article className="pt-32 md:pt-40">
       <div className="gutter">
         <Reveal className="mb-8 flex items-center gap-4 border-b rule pb-4">
-          <Link href="/collections" className="eyebrow text-gold hover:text-gold-soft">
+          <Link href="/collections" className="eyebrow text-accent transition-colors duration-500 hover:text-bone">
             Collections
           </Link>
           <span className="eyebrow text-bone-faint">/ {categoryLabel(piece.category)}</span>
@@ -63,12 +63,12 @@ export default function PieceDetail({ piece, related }: Props) {
       {/* Specification */}
       <div className="mt-20 grid grid-cols-1 gap-12 gutter md:grid-cols-12">
         <Reveal className="md:col-span-5">
-          <p className="eyebrow mb-6 text-gold">About this piece</p>
+          <p className="eyebrow mb-6 text-accent">About this piece</p>
           <p className="text-balance text-bone-dim">{piece.description}</p>
         </Reveal>
 
         <Reveal delay={0.1} className="md:col-span-3 md:col-start-8">
-          <p className="eyebrow mb-6 text-gold">Materials</p>
+          <p className="eyebrow mb-6 text-accent">Materials</p>
           <ul className="space-y-2">
             {piece.materials.map((material) => (
               <li key={material} className="text-sm text-bone-dim">
@@ -79,7 +79,7 @@ export default function PieceDetail({ piece, related }: Props) {
         </Reveal>
 
         <Reveal delay={0.2} className="md:col-span-2">
-          <p className="eyebrow mb-6 text-gold">Worn for</p>
+          <p className="eyebrow mb-6 text-accent">Worn for</p>
           <ul className="space-y-2">
             {piece.occasion.map((occasion) => (
               <li key={occasion} className="text-sm text-bone-dim">

@@ -52,14 +52,15 @@ function mulberry32(seed) {
   };
 }
 
-/* The palette placeholders are drawn from — all warm, all dark, all in the
-   same family as the site's ink/gold tokens so nothing looks foreign. */
+/* The palette placeholders are drawn from — all dark, all in the same jewel
+   family as the site's aubergine ground and its fuchsia/marigold/emerald
+   accents, so a grid of them reads as one shoot rather than as stock. */
 const TONES = [
-  [[28, 24, 20], [74, 60, 45]],
-  [[22, 20, 19], [96, 76, 52]],
-  [[31, 26, 22], [60, 54, 48]],
-  [[18, 17, 16], [84, 64, 42]],
-  [[36, 29, 24], [108, 85, 58]],
+  [[32, 18, 34], [126, 52, 84]], // plum into fuchsia
+  [[26, 16, 28], [104, 64, 40]], // aubergine into bronze
+  [[24, 20, 34], [58, 106, 96]], // ink-violet into emerald
+  [[36, 20, 30], [138, 86, 52]], // wine into marigold
+  [[22, 14, 24], [88, 48, 78]], // deep plum into mauve
 ];
 
 function render(name, { width, height }) {

@@ -14,7 +14,7 @@ export const site = {
   description:
     "An atelier for sculptural headwear — hand-blocked fascinators, occasion headpieces and hand-tied gele, made to order for the wearer and the day.",
   founded: 2016,
-  location: "London · Lagos", // TODO: confirm
+  location: "Lagos", // TODO: confirm
 
   contact: {
     email: "atelier@evesmillinery.com", // TODO

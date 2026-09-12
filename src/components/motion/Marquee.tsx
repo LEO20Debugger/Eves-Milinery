@@ -55,7 +55,7 @@ export default function Marquee({ items, className, speed = 28 }: Props) {
       {items.map((item, i) => (
         <span key={`${item}-${i}`} className="flex shrink-0 items-center gap-[3vw] pr-[3vw]">
           <span>{item}</span>
-          <span aria-hidden className="text-gold/60">
+          <span aria-hidden className="text-gold/70">
             ·
           </span>
         </span>

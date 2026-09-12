@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div className="flex min-h-[70svh] flex-col justify-center gutter">
       <Reveal className="mb-8 flex items-center gap-4 border-b rule pb-4">
-        <span className="eyebrow text-gold">404</span>
+        <span className="eyebrow text-accent">404</span>
         <span className="eyebrow text-bone-dim">Nothing here</span>
       </Reveal>
 

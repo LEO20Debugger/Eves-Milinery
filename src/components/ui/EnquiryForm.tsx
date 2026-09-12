@@ -29,10 +29,10 @@ function Field({
       </label>
       {children}
       <span className="relative block h-px w-full bg-bone/15">
-        <span className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-focus-within:scale-x-100" />
+        <span className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-focus-within:scale-x-100" />
       </span>
       {error && (
-        <p id={`${name}-error`} className="mt-2 text-xs text-gold-soft">
+        <p id={`${name}-error`} className="mt-2 text-xs text-marigold">
           {error}
         </p>
       )}
@@ -60,7 +60,7 @@ export default function EnquiryForm() {
         className="border-t rule pt-10"
         role="status"
       >
-        <p className="eyebrow text-gold">Enquiry received</p>
+        <p className="eyebrow text-accent">Enquiry received</p>
         <p className="mt-6 max-w-md font-display text-4xl font-light text-bone">{state.message}</p>
       </motion.div>
     );
@@ -174,13 +174,13 @@ export default function EnquiryForm() {
         <button
           type="submit"
           disabled={pending}
-          className="group relative overflow-hidden border border-bone/30 px-10 py-4 transition-colors duration-500 hover:border-gold disabled:opacity-50"
+          className="group relative overflow-hidden border border-bone/30 px-10 py-4 transition-colors duration-500 hover:border-accent disabled:opacity-50"
         >
           <span className="eyebrow relative z-10 text-bone transition-colors duration-500 group-hover:text-ink">
             {pending ? "Sending" : "Send enquiry"}
           </span>
           {/* Fill wipes up from the foot of the button on hover. */}
-          <span className="absolute inset-0 origin-bottom scale-y-0 bg-gold transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100" />
+          <span className="absolute inset-0 origin-bottom scale-y-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100" />
         </button>
 
         <AnimatePresence>
@@ -190,7 +190,7 @@ export default function EnquiryForm() {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0 }}
-              className="text-sm text-gold-soft"
+              className="text-sm text-marigold"
             >
               {state.message}
             </motion.p>

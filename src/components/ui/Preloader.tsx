@@ -112,14 +112,14 @@ export default function Preloader() {
             >
               Bespoke headwear
             </motion.span>
-            <span className="font-display text-display-sm leading-none font-light text-gold tabular-nums">
+            <span className="font-display text-display-sm leading-none font-light text-accent tabular-nums">
               {count}
             </span>
           </div>
 
           {/* Progress rule — the only element that reports actual progress. */}
           <motion.div
-            className="h-px w-full origin-left bg-gold"
+            className="h-px w-full origin-left bg-accent"
             initial={{ scaleX: 0 }}
             animate={{ scaleX: count / 100 }}
             transition={{ ease: "linear", duration: 0.1 }}

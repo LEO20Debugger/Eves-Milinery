@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
 import { CURTAIN, DURATION } from "@/lib/motion";
+import { accentClassFor } from "@/lib/utils";
 import { nav } from "@/content/site";
 
 function routeLabel(pathname: string) {
@@ -25,7 +26,9 @@ export default function PageTransition({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const reduced = useReducedMotion();
 
-  if (reduced) return <>{children}</>;
+  const accent = accentClassFor(pathname);
+
+  if (reduced) return <div className={accent}>{children}</div>;
 
   return (
     <>
@@ -49,6 +52,7 @@ export default function PageTransition({ children }: { children: ReactNode }) {
       </motion.div>
 
       <motion.div
+        className={accent}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut", delay: 0.35 }}

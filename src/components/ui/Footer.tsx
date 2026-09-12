@@ -12,10 +12,10 @@ export default function Footer() {
     <footer className="relative mt-32 border-t rule pt-16 gutter pb-8">
       <div className="flex flex-col gap-16 md:flex-row md:justify-between">
         <Reveal className="max-w-sm">
-          <p className="eyebrow mb-6 text-gold">Enquiries</p>
+          <p className="eyebrow mb-6 text-accent">Enquiries</p>
           <a
             href={`mailto:${site.contact.email}`}
-            className="font-display text-3xl font-light text-bone transition-colors duration-500 hover:text-gold"
+            className="font-display text-3xl font-light text-bone transition-colors duration-500 hover:text-accent"
           >
             {site.contact.email}
           </a>
@@ -25,7 +25,7 @@ export default function Footer() {
 
         <Reveal delay={0.1} className="flex gap-16">
           <div>
-            <p className="eyebrow mb-6 text-gold">Pages</p>
+            <p className="eyebrow mb-6 text-accent">Pages</p>
             <ul className="space-y-3">
               {nav.map((item) => (
                 <li key={item.href}>
@@ -40,7 +40,7 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <p className="eyebrow mb-6 text-gold">Elsewhere</p>
+            <p className="eyebrow mb-6 text-accent">Elsewhere</p>
             <ul className="space-y-3">
               {site.socials.map((social) => (
                 <li key={social.label}>

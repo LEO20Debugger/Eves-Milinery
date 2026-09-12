@@ -61,14 +61,14 @@ export default function CollectionsList({ pieces }: { pieces: Piece[] }) {
               }}
               className={cn(
                 "eyebrow relative transition-colors duration-500",
-                selected ? "text-gold" : "text-bone-dim hover:text-bone",
+                selected ? "text-accent" : "text-bone-dim hover:text-bone",
               )}
             >
               {item.label}
               {selected && (
                 <motion.span
                   layoutId={reduced ? undefined : "filter-underline"}
-                  className="absolute -bottom-2 left-0 h-px w-full bg-gold"
+                  className="absolute -bottom-2 left-0 h-px w-full bg-accent"
                 />
               )}
             </button>
@@ -106,7 +106,7 @@ export default function CollectionsList({ pieces }: { pieces: Piece[] }) {
                     active && active !== piece.slug ? "opacity-35" : "opacity-100",
                   )}
                 >
-                  <span className="eyebrow w-8 shrink-0 text-gold">{pad(index + 1)}</span>
+                  <span className="eyebrow w-8 shrink-0 text-accent">{pad(index + 1)}</span>
 
                   <span className="font-display text-4xl font-light text-bone transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 md:text-6xl">
                     {piece.name}

@@ -40,16 +40,16 @@ export default function ContactPage() {
 
         <aside className="space-y-10 md:col-span-4 md:col-start-9">
           <Reveal>
-            <p className="eyebrow mb-4 text-gold">Direct</p>
+            <p className="eyebrow mb-4 text-accent">Direct</p>
             <a
               href={`mailto:${site.contact.email}`}
-              className="block text-bone transition-colors duration-500 hover:text-gold"
+              className="block text-bone transition-colors duration-500 hover:text-accent"
             >
               {site.contact.email}
             </a>
             <a
               href={`tel:${site.contact.phone.replace(/\s/g, "")}`}
-              className="block text-bone-dim transition-colors duration-500 hover:text-gold"
+              className="block text-bone-dim transition-colors duration-500 hover:text-accent"
             >
               {site.contact.phone}
             </a>
@@ -57,25 +57,25 @@ export default function ContactPage() {
               href={`https://wa.me/${whatsapp}`}
               target="_blank"
               rel="noreferrer"
-              className="mt-2 inline-block text-bone-dim transition-colors duration-500 hover:text-gold"
+              className="mt-2 inline-block text-bone-dim transition-colors duration-500 hover:text-accent"
             >
               WhatsApp
             </a>
           </Reveal>
 
           <Reveal delay={0.1}>
-            <p className="eyebrow mb-4 text-gold">Studio</p>
+            <p className="eyebrow mb-4 text-accent">Studio</p>
             <p className="text-bone-dim">{site.contact.studio}</p>
             <p className="text-bone-dim">{site.location}</p>
           </Reveal>
 
           <Reveal delay={0.2}>
-            <p className="eyebrow mb-4 text-gold">Lead times</p>
+            <p className="eyebrow mb-4 text-accent">Lead times</p>
             <p className="text-sm text-bone-dim">{contactPage.leadTime}</p>
           </Reveal>
 
           <Reveal delay={0.3}>
-            <p className="eyebrow mb-4 text-gold">Elsewhere</p>
+            <p className="eyebrow mb-4 text-accent">Elsewhere</p>
             <ul className="space-y-2">
               {site.socials.map((social) => (
                 <li key={social.label}>
@@ -83,7 +83,7 @@ export default function ContactPage() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-bone-dim transition-colors duration-500 hover:text-gold"
+                    className="text-bone-dim transition-colors duration-500 hover:text-accent"
                   >
                     {social.label}
                   </a>
