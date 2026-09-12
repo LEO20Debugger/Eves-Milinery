@@ -36,13 +36,13 @@ export default function PageTransition({ children }: { children: ReactNode }) {
         // Keyed on the path so a new curtain plays for each navigation.
         key={pathname}
         aria-hidden
-        className="pointer-events-none fixed inset-0 z-[70] flex items-center justify-center bg-ink"
+        className="pointer-events-none fixed inset-0 z-[70] flex items-center justify-center bg-canvas"
         initial={{ y: 0 }}
         animate={{ y: "-100%" }}
         transition={{ duration: DURATION.curtain, ease: CURTAIN, delay: 0.1 }}
       >
         <motion.span
-          className="font-display text-display-sm font-light text-bone lowercase"
+          className="font-display text-display-sm font-light text-ink lowercase"
           initial={{ opacity: 1 }}
           animate={{ opacity: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}

@@ -41,7 +41,7 @@ export default function PieceCard({
       className={cn("group block", className)}
     >
       <motion.div
-        className={cn("relative overflow-hidden bg-ink-raised", frameClassName)}
+        className={cn("frame relative", frameClassName)}
         initial={reduced ? undefined : { clipPath: "inset(100% 0% 0% 0%)" }}
         whileInView={reduced ? undefined : { clipPath: "inset(0% 0% 0% 0%)" }}
         viewport={VIEWPORT}
@@ -63,9 +63,9 @@ export default function PieceCard({
 
         {/* Tagline rises in on hover. Pointer-events-none so it never
             intercepts the click. */}
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden bg-gradient-to-t from-ink/80 to-transparent p-5 md:block">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden bg-gradient-to-t from-black/70 to-transparent p-5 md:block">
           <span className="line-mask">
-            <span className="block translate-y-full text-sm text-bone transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
+            <span className="block translate-y-full text-sm text-white transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-y-0">
               {piece.tagline}
             </span>
           </span>
@@ -73,8 +73,8 @@ export default function PieceCard({
       </motion.div>
 
       <div className="mt-4 flex items-baseline justify-between gap-4">
-        <h3 className="font-display text-2xl font-light text-bone">{piece.name}</h3>
-        <span className="eyebrow text-bone-faint">{categoryLabel(piece.category)}</span>
+        <h3 className="font-display text-2xl font-light text-ink">{piece.name}</h3>
+        <span className="eyebrow text-ink-faint">{categoryLabel(piece.category)}</span>
       </div>
     </Link>
   );

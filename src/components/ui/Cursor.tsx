@@ -79,11 +79,11 @@ export default function Cursor() {
       style={{ x, y }}
     >
       <motion.div
-        className="flex items-center justify-center rounded-full border border-bone"
+        className="flex items-center justify-center rounded-full border border-ink"
         animate={{
           width: label ? 84 : hovering ? 46 : SIZE,
           height: label ? 84 : hovering ? 46 : SIZE,
-          backgroundColor: label ? "#ede7dd" : hovering ? "rgba(237,231,221,0.12)" : "transparent",
+          backgroundColor: label ? "#1d1d1f" : hovering ? "rgba(29,29,31,0.08)" : "transparent",
           opacity: visible ? 1 : 0,
           // Keeps the ring centred on the pointer at every size.
           x: "-50%",
@@ -94,7 +94,7 @@ export default function Cursor() {
         <AnimatePresence>
           {label && (
             <motion.span
-              className="eyebrow text-ink"
+              className="eyebrow text-canvas"
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}

@@ -42,7 +42,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
       <div className="space-y-20 gutter">
         {steps.map((step, i) => (
           <section key={step.title} className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="relative aspect-[3/2] overflow-hidden bg-ink-raised">
+            <div className="frame relative aspect-[3/2]">
               <Image
                 src={step.image}
                 alt=""
@@ -53,8 +53,8 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
             </div>
             <div>
               <span className="eyebrow text-accent">{pad(i + 1)}</span>
-              <h3 className="mt-4 font-display text-4xl font-light text-bone">{step.title}</h3>
-              <p className="mt-4 text-bone-dim">{step.body}</p>
+              <h3 className="mt-4 font-display text-4xl font-light text-ink">{step.title}</h3>
+              <p className="mt-4 text-ink-dim">{step.body}</p>
             </div>
           </section>
         ))}
@@ -67,7 +67,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
       <div className="sticky top-0 flex h-screen items-center">
         <div className="grid w-full grid-cols-1 items-center gap-12 gutter md:grid-cols-2">
           {/* Pinned image stack — one layer per step, crossfading. */}
-          <div className="relative aspect-[3/2] w-full overflow-hidden bg-ink-raised">
+          <div className="frame relative aspect-[3/2] w-full">
             {steps.map((step, i) => (
               <motion.div
                 key={step.image}
@@ -87,7 +87,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
             ))}
 
             {/* Progress rule across the foot of the image. */}
-            <div className="absolute inset-x-0 bottom-0 h-px bg-bone/20">
+            <div className="absolute inset-x-0 bottom-0 h-px bg-ink/10">
               <motion.div
                 className="h-full origin-left bg-accent"
                 animate={{ scaleX: (index + 1) / steps.length }}
@@ -113,10 +113,10 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
                   exit={{ opacity: 0, y: -12 }}
                   transition={{ duration: 0.5, ease: EXPO_OUT }}
                 >
-                  <h3 className="font-display text-4xl font-light text-bone md:text-6xl">
+                  <h3 className="font-display text-4xl font-light text-ink md:text-6xl">
                     {steps[index].title}
                   </h3>
-                  <p className="mt-5 max-w-md text-bone-dim">{steps[index].body}</p>
+                  <p className="mt-5 max-w-md text-ink-dim">{steps[index].body}</p>
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -128,7 +128,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
                   <span className="sr-only">{step.title}</span>
                   <motion.span
                     aria-hidden
-                    className="block h-px w-10 bg-bone"
+                    className="block h-px w-10 bg-ink"
                     animate={{ opacity: i === index ? 1 : 0.2 }}
                     transition={{ duration: 0.4 }}
                   />

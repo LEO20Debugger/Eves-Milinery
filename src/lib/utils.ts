@@ -11,17 +11,17 @@ export function pad(n: number, width = 2) {
 }
 
 /**
- * Each route runs on its own jewel tone.
+ * Each route runs on its own Apple system accent.
  *
  * The returned class reassigns `--color-accent`, which every accent utility on
  * the site resolves against — so one class re-tints a whole page's eyebrows,
  * hover states, underline wipes, focus rings and progress marks. Applied by
- * `PageTransition`; Nav and Footer sit outside it and stay on fuchsia so the
+ * `PageTransition`; Nav and Footer sit outside it and stay on blue so the
  * site's furniture reads as constant while the rooms change colour.
  */
 export function accentClassFor(pathname: string) {
-  if (pathname.startsWith("/collections")) return "accent-marigold";
-  if (pathname.startsWith("/gele")) return "accent-emerald";
-  if (pathname.startsWith("/atelier")) return "accent-gold";
-  return "accent-fuchsia";
+  if (pathname.startsWith("/collections")) return "accent-orange";
+  if (pathname.startsWith("/gele")) return "accent-violet";
+  if (pathname.startsWith("/atelier")) return "accent-pink";
+  return "accent-blue";
 }

@@ -1,35 +1,48 @@
 @import "tailwindcss";
 
 /* ── Design tokens ────────────────────────────────────────────────────────
-   Eve's Millinery runs a single fixed editorial palette: jewel tones on a
-   deep aubergine ground. The site is not theme-switchable by design — the
-   plum ground IS the brand.
+   Light Liquid Glass. A near-white ground, frosted translucent surfaces with
+   specular edges, and vibrant accents — Apple's system palette.
 
-   Every accent below has been checked at 4.5:1 or better against
-   `--color-ink`, so any of them is safe for body-size text.
+   The photography is the only dark thing on the page, which is what makes the
+   headwear carry. Glass is furniture only: nav, menu, filter bar, form and
+   cards. It never sits on top of a photograph's subject.
+
+   Every accent below clears 4.5:1 against `--color-canvas`, so any of them is
+   safe for body-size text.
    ────────────────────────────────────────────────────────────────────── */
 @theme {
   /* Ground */
-  --color-ink: #1a0e1b;
-  --color-ink-soft: #221426;
-  --color-ink-raised: #2a1729;
+  --color-canvas: #f5f5f7;
+  --color-canvas-alt: #ffffff;
+  --color-canvas-sunken: #e8e8ed;
 
-  /* Type */
-  --color-bone: #f5ede8;
-  --color-bone-dim: #b9a3b4;
-  --color-bone-faint: #9a8397;
+  /* Type. `ink` means text here — it is never a background. */
+  --color-ink: #1d1d1f;
+  --color-ink-dim: #6e6e73;
+  --color-ink-faint: #86868b;
 
-  /* Jewel accents. `--color-accent` is the one components reference; the
-     named hues exist so a page can reassign it (see `.accent-*` below). */
-  --color-accent: #e0457b;
-  --color-fuchsia: #e0457b;
-  --color-marigold: #f2a03d;
-  --color-emerald: #2e8b7a;
+  /* Apple system accents. `--color-accent` is the one components reference;
+     the named hues exist so a page can reassign it (see `.accent-*` below). */
+  --color-accent: #0071e3;
+  --color-blue: #0071e3;
+  --color-violet: #8944ab;
+  --color-pink: #d1275c;
+  --color-orange: #b25000;
 
-  /* Gold is reserved for hairlines and small decorative marks, so it never
-     competes with whichever jewel tone a page is running on. */
-  --color-gold: #d4af6a;
-  --color-gold-soft: #e3c68c;
+  /* Glass. Tuned so text laid over a frosted panel still clears contrast
+     against whatever photograph happens to be behind it. */
+  --color-glass: rgb(255 255 255 / 0.72);
+  --color-glass-strong: rgb(255 255 255 / 0.88);
+  --color-glass-edge: rgb(255 255 255 / 0.9);
+  --color-hairline: rgb(0 0 0 / 0.1);
+
+  --blur-glass: 24px;
+  --blur-glass-heavy: 40px;
+
+  /* Apple-style continuous corners. */
+  --radius-glass: 1.25rem;
+  --radius-frame: 1.5rem;
 
   --font-display: var(--font-cormorant), "Times New Roman", serif;
   --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
@@ -46,8 +59,8 @@
 
 @layer base {
   html {
-    background-color: var(--color-ink);
-    color-scheme: dark;
+    background-color: var(--color-canvas);
+    color-scheme: light;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -65,8 +78,8 @@
   }
 
   body {
-    background-color: var(--color-ink);
-    color: var(--color-bone);
+    background-color: var(--color-canvas);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     font-size: 1rem;
     line-height: 1.7;
@@ -74,8 +87,8 @@
   }
 
   ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-bone);
+    background-color: color-mix(in srgb, var(--color-accent) 22%, transparent);
+    color: var(--color-ink);
   }
 
   :focus-visible {
@@ -122,7 +135,65 @@
   }
 
   .rule {
-    border-color: color-mix(in srgb, var(--color-bone) 14%, transparent);
+    border-color: var(--color-hairline);
+  }
+
+  /* ── Liquid Glass ──────────────────────────────────────────────────────
+     A frosted surface: blurred and saturated backdrop, a bright specular
+     top edge, and a soft shadow so it reads as floating above the page
+     rather than painted onto it.
+
+     `backdrop-filter` is genuinely expensive — it forces the compositor to
+     re-sample everything behind the element every frame. Keep the number of
+     simultaneous glass surfaces small; this site never has more than three
+     on screen at once.
+     ──────────────────────────────────────────────────────────────────── */
+  .glass {
+    background-color: var(--color-glass);
+    /* No hand-written -webkit- prefix here: Lightning CSS collapses the pair
+       and keeps only the prefixed one, which modern Chromium does not support,
+       silently killing the blur. Let the build add prefixes from its targets. */
+    backdrop-filter: blur(var(--blur-glass)) saturate(180%);
+    border: 1px solid var(--color-glass-edge);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.6) inset,
+      0 8px 32px -8px rgb(0 0 0 / 0.12),
+      0 2px 8px -2px rgb(0 0 0 / 0.06);
+  }
+
+  .glass-strong {
+    background-color: var(--color-glass-strong);
+    backdrop-filter: blur(var(--blur-glass-heavy)) saturate(200%);
+    border: 1px solid var(--color-glass-edge);
+    box-shadow:
+      0 1px 0 0 rgb(255 255 255 / 0.7) inset,
+      0 16px 48px -12px rgb(0 0 0 / 0.18);
+  }
+
+  /* Browsers without backdrop-filter (and anyone who has turned off
+     transparency) get an opaque panel instead of unreadable text. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .glass,
+    .glass-strong {
+      background-color: rgb(255 255 255 / 0.97);
+    }
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    .glass,
+    .glass-strong {
+      background-color: rgb(255 255 255 / 0.97);
+      backdrop-filter: none;
+    }
+  }
+
+  /* Image frames. Apple-style continuous corners, with a hairline so a
+     light photograph still has an edge against the near-white ground. */
+  .frame {
+    border-radius: var(--radius-frame);
+    overflow: hidden;
+    background-color: var(--color-canvas-sunken);
+    box-shadow: 0 0 0 1px var(--color-hairline) inset;
   }
 
   /* Per-page accent.
@@ -130,18 +201,18 @@
      reassigning that variable on a wrapper re-tints a whole page — eyebrows,
      hover states, underline wipes, focus rings and progress marks — without
      touching a single component. Applied per route in PageTransition.
-     Nav and Footer sit outside it and stay on the default fuchsia. */
-  .accent-fuchsia {
-    --color-accent: var(--color-fuchsia);
+     Nav and Footer sit outside it and stay on the default blue. */
+  .accent-blue {
+    --color-accent: var(--color-blue);
   }
-  .accent-marigold {
-    --color-accent: var(--color-marigold);
+  .accent-violet {
+    --color-accent: var(--color-violet);
   }
-  .accent-emerald {
-    --color-accent: var(--color-emerald);
+  .accent-pink {
+    --color-accent: var(--color-pink);
   }
-  .accent-gold {
-    --color-accent: var(--color-gold);
+  .accent-orange {
+    --color-accent: var(--color-orange);
   }
 
   /* Page gutter. Wide margins are doing a lot of the "expensive" work. */

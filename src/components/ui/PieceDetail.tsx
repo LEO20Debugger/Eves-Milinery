@@ -24,21 +24,21 @@ export default function PieceDetail({ piece, related }: Props) {
     <article className="pt-32 md:pt-40">
       <div className="gutter">
         <Reveal className="mb-8 flex items-center gap-4 border-b rule pb-4">
-          <Link href="/collections" className="eyebrow text-accent transition-colors duration-500 hover:text-bone">
+          <Link href="/collections" className="eyebrow text-accent transition-colors duration-500 hover:text-ink">
             Collections
           </Link>
-          <span className="eyebrow text-bone-faint">/ {categoryLabel(piece.category)}</span>
-          <span className="eyebrow ml-auto text-bone-faint">{piece.year}</span>
+          <span className="eyebrow text-ink-faint">/ {categoryLabel(piece.category)}</span>
+          <span className="eyebrow ml-auto text-ink-faint">{piece.year}</span>
         </Reveal>
 
         <SplitText
           as="h1"
           immediate
           lines={[piece.name]}
-          className="font-display text-display font-light text-bone"
+          className="font-display text-display font-light text-ink"
         />
 
-        <p className="mt-6 max-w-xl text-balance text-xl text-bone-dim">{piece.tagline}</p>
+        <p className="mt-6 max-w-xl text-balance text-xl text-ink-dim">{piece.tagline}</p>
       </div>
 
       {/* Cover. `layoutId` matches the card on the index, so arriving here from
@@ -46,7 +46,7 @@ export default function PieceDetail({ piece, related }: Props) {
       <div className="mt-16 gutter">
         <motion.div
           layoutId={reduced ? undefined : `piece-${piece.slug}`}
-          className="relative aspect-[16/10] w-full overflow-hidden bg-ink-raised"
+          className="frame relative aspect-[16/10] w-full"
           transition={{ duration: DURATION.slow, ease: EXPO_OUT }}
         >
           <Image
@@ -64,14 +64,14 @@ export default function PieceDetail({ piece, related }: Props) {
       <div className="mt-20 grid grid-cols-1 gap-12 gutter md:grid-cols-12">
         <Reveal className="md:col-span-5">
           <p className="eyebrow mb-6 text-accent">About this piece</p>
-          <p className="text-balance text-bone-dim">{piece.description}</p>
+          <p className="text-balance text-ink-dim">{piece.description}</p>
         </Reveal>
 
         <Reveal delay={0.1} className="md:col-span-3 md:col-start-8">
           <p className="eyebrow mb-6 text-accent">Materials</p>
           <ul className="space-y-2">
             {piece.materials.map((material) => (
-              <li key={material} className="text-sm text-bone-dim">
+              <li key={material} className="text-sm text-ink-dim">
                 {material}
               </li>
             ))}
@@ -82,7 +82,7 @@ export default function PieceDetail({ piece, related }: Props) {
           <p className="eyebrow mb-6 text-accent">Worn for</p>
           <ul className="space-y-2">
             {piece.occasion.map((occasion) => (
-              <li key={occasion} className="text-sm text-bone-dim">
+              <li key={occasion} className="text-sm text-ink-dim">
                 {occasion}
               </li>
             ))}
@@ -111,7 +111,7 @@ export default function PieceDetail({ piece, related }: Props) {
       {/* Commission this shape. The enquiry form reads `?piece=` to prefill. */}
       <section className="mt-28 border-y rule py-20 gutter md:mt-40">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <h2 className="max-w-lg font-display text-display-sm font-light text-bone">
+          <h2 className="max-w-lg font-display text-display-sm font-light text-ink">
             Commission something like {piece.name}
           </h2>
           <CtaLink href={`/contact?piece=${piece.slug}`} magnetic>
@@ -123,7 +123,7 @@ export default function PieceDetail({ piece, related }: Props) {
       {related.length > 0 && (
         <section className="py-24 gutter">
           <Reveal className="mb-12 flex items-center gap-4 border-b rule pb-4">
-            <span className="eyebrow text-bone-dim">More from the archive</span>
+            <span className="eyebrow text-ink-dim">More from the archive</span>
           </Reveal>
 
           <div className="grid grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-3">

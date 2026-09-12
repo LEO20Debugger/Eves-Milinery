@@ -90,12 +90,12 @@ export default function Preloader() {
     <AnimatePresence>
       {active && (
         <motion.div
-          className="fixed inset-0 z-[90] flex flex-col justify-between bg-ink gutter py-10"
+          className="fixed inset-0 z-[90] flex flex-col justify-between bg-canvas gutter py-10"
           exit={{ y: "-100%" }}
           transition={{ duration: 1, ease: CURTAIN }}
         >
           <motion.span
-            className="eyebrow text-bone-dim"
+            className="eyebrow text-ink-dim"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
@@ -105,7 +105,7 @@ export default function Preloader() {
 
           <div className="flex items-end justify-between gap-6">
             <motion.span
-              className="font-display text-display-sm leading-none font-light text-bone"
+              className="font-display text-display-sm leading-none font-light text-ink"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}

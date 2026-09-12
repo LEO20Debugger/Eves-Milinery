@@ -21,7 +21,7 @@ export default function Home() {
 
       <Marquee
         items={marqueeWords}
-        className="eyebrow border-y rule text-bone-dim"
+        className="eyebrow border-y rule text-ink-dim"
       />
 
       {/* ── Featured work ──────────────────────────────────────────────────
@@ -89,7 +89,7 @@ export default function Home() {
       {/* ── Gele feature ───────────────────────────────────────────────────
           Gele gets its own full-width moment rather than being a filter tab
           beside the hats. */}
-      <section className="relative overflow-hidden border-y rule bg-ink-soft py-28 md:py-40">
+      <section className="relative overflow-hidden border-y rule bg-canvas-alt py-28 md:py-40">
         <div className="grid grid-cols-1 items-center gap-16 gutter md:grid-cols-2">
           <Parallax distance={50}>
             <MaskReveal
@@ -106,16 +106,16 @@ export default function Home() {
           <div>
             <Reveal className="mb-8 flex items-center gap-4 border-b rule pb-4">
               <span className="eyebrow text-accent">02</span>
-              <span className="eyebrow text-bone-dim">{gelePage.eyebrow}</span>
+              <span className="eyebrow text-ink-dim">{gelePage.eyebrow}</span>
             </Reveal>
 
             <SplitText
               lines={gelePage.lines}
-              className="font-display text-display font-light text-bone"
+              className="font-display text-display font-light text-ink"
             />
 
             <Reveal delay={0.1}>
-              <p className="mt-8 max-w-md text-balance text-bone-dim">{gelePage.standfirst}</p>
+              <p className="mt-8 max-w-md text-balance text-ink-dim">{gelePage.standfirst}</p>
               <div className="mt-10">
                 <CtaLink href="/gele">The art of gele</CtaLink>
               </div>
@@ -138,11 +138,11 @@ export default function Home() {
         <Stagger className="mt-20 grid grid-cols-1 gap-12 gutter sm:grid-cols-3" stagger={0.12}>
           {atelier.stats.map((stat) => (
             <StaggerItem key={stat.label} className="border-t rule pt-6">
-              <p className="font-display text-display-sm leading-none font-light text-bone">
+              <p className="font-display text-display-sm leading-none font-light text-ink">
                 {stat.value}
                 {stat.suffix}
               </p>
-              <p className="eyebrow mt-4 text-bone-faint">{stat.label}</p>
+              <p className="eyebrow mt-4 text-ink-faint">{stat.label}</p>
             </StaggerItem>
           ))}
         </Stagger>

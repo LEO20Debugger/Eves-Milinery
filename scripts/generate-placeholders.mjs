@@ -2,7 +2,7 @@
    Placeholder image generator.
 
    The atelier has no photography yet. This script scans the source tree for
-   every `/images/*.jpg` reference and writes a tonal, grainy, warm-dark
+   every `/images/*.jpg` reference and writes a soft, high-key, light-studio
    placeholder at the exact dimensions the layout expects — so the site reads
    as composed rather than broken, and a real photograph drops in later by
    filename with zero layout change.
@@ -52,15 +52,19 @@ function mulberry32(seed) {
   };
 }
 
-/* The palette placeholders are drawn from — all dark, all in the same jewel
-   family as the site's aubergine ground and its fuchsia/marigold/emerald
-   accents, so a grid of them reads as one shoot rather than as stock. */
+/* Light studio tones to match the Liquid Glass palette: soft high-key greys
+   with the faintest wash of the site's accent hues, so a grid of them reads as
+   one bright shoot rather than as stock.
+
+   Deliberately a little darker than the #F5F5F7 canvas so each frame still has
+   an edge against the page — a placeholder that matches the ground exactly
+   looks like a missing image rather than a photograph. */
 const TONES = [
-  [[32, 18, 34], [126, 52, 84]], // plum into fuchsia
-  [[26, 16, 28], [104, 64, 40]], // aubergine into bronze
-  [[24, 20, 34], [58, 106, 96]], // ink-violet into emerald
-  [[36, 20, 30], [138, 86, 52]], // wine into marigold
-  [[22, 14, 24], [88, 48, 78]], // deep plum into mauve
+  [[228, 228, 235], [196, 198, 208]], // cool studio grey
+  [[236, 232, 234], [205, 190, 200]], // grey into soft violet
+  [[238, 234, 228], [208, 196, 180]], // warm seamless paper
+  [[230, 234, 240], [190, 202, 218]], // grey into cool blue
+  [[240, 234, 230], [214, 196, 186]], // grey into warm blush
 ];
 
 function render(name, { width, height }) {
@@ -88,11 +92,12 @@ function render(name, { width, height }) {
       // Ease so the falloff looks photographic rather than linear.
       t = t * t * (3 - 2 * t);
 
-      // Vignette — darkens the corners, the way a lens would.
-      const vignette = 1 - 0.45 * Math.pow(Math.hypot(x - cx, y - cy) / maxR, 2.2);
+      // Very light vignette — on a near-white page anything stronger reads
+      // as a dirty lens rather than as depth.
+      const vignette = 1 - 0.14 * Math.pow(Math.hypot(x - cx, y - cy) / maxR, 2.2);
 
       // Film grain.
-      const grain = (rand() - 0.5) * 11;
+      const grain = (rand() - 0.5) * 6;
 
       const i = (y * width + x) * 3;
       for (let c = 0; c < 3; c++) {

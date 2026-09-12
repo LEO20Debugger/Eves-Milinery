@@ -50,7 +50,7 @@ export default function HoverImage({ image, activeKey }: Props) {
         {image && activeKey && (
           <motion.div
             key={activeKey}
-            className="relative overflow-hidden bg-ink-raised"
+            className="frame relative"
             style={{ width: WIDTH, height: HEIGHT }}
             initial={{ clipPath: "inset(100% 0% 0% 0%)", scale: 1.06 }}
             animate={{ clipPath: "inset(0% 0% 0% 0%)", scale: 1 }}

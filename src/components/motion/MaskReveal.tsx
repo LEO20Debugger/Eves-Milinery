@@ -50,7 +50,7 @@ export default function MaskReveal({
 
   return (
     <motion.div
-      className={cn("relative overflow-hidden bg-ink-raised", frameClassName)}
+      className={cn("frame relative", frameClassName)}
       initial={reduced ? undefined : { clipPath: "inset(100% 0% 0% 0%)" }}
       whileInView={reduced ? undefined : { clipPath: "inset(0% 0% 0% 0%)" }}
       viewport={VIEWPORT}

@@ -33,17 +33,17 @@ export default function SectionHeading({
     <div className={cn(className)}>
       <Reveal className="mb-8 flex items-center gap-4 border-b rule pb-4">
         {index !== undefined && <span className="eyebrow text-accent">{pad(index)}</span>}
-        <span className="eyebrow text-bone-dim">{eyebrow}</span>
+        <span className="eyebrow text-ink-dim">{eyebrow}</span>
       </Reveal>
 
       <SplitText
         as={as}
         immediate={immediate}
         lines={lines}
-        className="font-display text-display font-light text-bone"
+        className="font-display text-display font-light text-ink"
       />
 
-      {children && <div className="mt-8 max-w-xl text-bone-dim">{children}</div>}
+      {children && <div className="mt-8 max-w-xl text-ink-dim">{children}</div>}
     </div>
   );
 }

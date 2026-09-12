@@ -7,14 +7,14 @@ export default function NotFound() {
     <div className="flex min-h-[70svh] flex-col justify-center gutter">
       <Reveal className="mb-8 flex items-center gap-4 border-b rule pb-4">
         <span className="eyebrow text-accent">404</span>
-        <span className="eyebrow text-bone-dim">Nothing here</span>
+        <span className="eyebrow text-ink-dim">Nothing here</span>
       </Reveal>
 
       <SplitText
         as="h1"
         immediate
         lines={["This piece", "has been", "put away"]}
-        className="font-display text-display font-light text-bone"
+        className="font-display text-display font-light text-ink"
       />
 
       <Reveal delay={0.3} className="mt-10">

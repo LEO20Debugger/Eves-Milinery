@@ -8,10 +8,15 @@ import SplitText from "@/components/motion/SplitText";
 /**
  * The home hero.
  *
- * Three effects, layered and all deliberately small: a slow continuous scale
- * drift so the frame is never dead, a ~10% scroll-linked parallax, and the
- * headline rising line by line out of its masks. Restraint is the point —
- * a 50% parallax here would read as a template, not as an atelier.
+ * Liquid Glass version: the photograph runs full-bleed and the headline sits on
+ * a frosted panel over it. That panel is doing real work — it guarantees the
+ * type stays legible no matter how light or busy the photograph behind it is,
+ * which plain white-on-image never can. It is also the clearest statement of
+ * the design language, so it happens once, here, at full strength.
+ *
+ * Three motion layers, all deliberately small: a slow continuous scale drift so
+ * the frame is never dead, ~10% scroll parallax, and the headline rising line by
+ * line out of its masks.
  */
 export default function Hero() {
   const reduced = useReducedMotion();
@@ -19,14 +24,16 @@ export default function Hero() {
 
   // ~10% of viewport travel across the first screen.
   const y = useTransform(scrollY, [0, 900], [0, 90]);
-  const overlay = useTransform(scrollY, [0, 700], [0.35, 0.7]);
+  // The glass panel drifts up and fades as you leave the hero.
+  const panelY = useTransform(scrollY, [0, 700], [0, -60]);
+  const panelOpacity = useTransform(scrollY, [0, 600], [1, 0]);
 
   return (
     <section className="relative h-[100svh] w-full overflow-hidden">
       <motion.div className="absolute inset-0" style={reduced ? undefined : { y }}>
         <Image
           src="/images/hero.jpg"
-          alt="A hand-blocked occasion headpiece photographed in low, warm light"
+          alt="A hand-blocked occasion headpiece photographed in bright, soft studio light"
           fill
           priority
           sizes="100vw"
@@ -34,41 +41,39 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* Scrim deepens as you scroll so the nav and headline stay legible. */}
-      <motion.div
-        aria-hidden
-        className="absolute inset-0 bg-ink"
-        style={{ opacity: reduced ? 0.45 : overlay }}
-      />
+      <div className="relative flex h-full items-end gutter pb-14">
+        <motion.div
+          className="glass w-full max-w-3xl rounded-[var(--radius-glass)] p-8 md:p-12"
+          style={reduced ? undefined : { y: panelY, opacity: panelOpacity }}
+        >
+          <SplitText
+            as="h1"
+            immediate
+            delay={0.35}
+            lines={heroLines}
+            className="font-display text-display font-light text-ink"
+          />
 
-      <div className="relative flex h-full flex-col justify-end gutter pb-16">
-        <SplitText
-          as="h1"
-          immediate
-          delay={0.35}
-          lines={heroLines}
-          className="font-display text-display-lg font-light text-bone"
-        />
+          <div className="mt-8 flex flex-col gap-6 border-t rule pt-6 md:flex-row md:items-start md:justify-between">
+            <motion.p
+              className="max-w-md text-balance text-ink-dim"
+              initial={reduced ? undefined : { opacity: 0, y: 20 }}
+              animate={reduced ? undefined : { opacity: 1, y: 0 }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
+            >
+              {heroStandfirst}
+            </motion.p>
 
-        <div className="mt-10 flex flex-col gap-8 border-t rule pt-8 md:flex-row md:items-start md:justify-between">
-          <motion.p
-            className="max-w-md text-balance text-bone-dim"
-            initial={reduced ? undefined : { opacity: 0, y: 20 }}
-            animate={reduced ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
-          >
-            {heroStandfirst}
-          </motion.p>
-
-          <motion.p
-            className="eyebrow text-bone-faint"
-            initial={reduced ? undefined : { opacity: 0 }}
-            animate={reduced ? undefined : { opacity: 1 }}
-            transition={{ duration: 1, delay: 1.1 }}
-          >
-            Est. {site.founded} · {site.location}
-          </motion.p>
-        </div>
+            <motion.p
+              className="eyebrow shrink-0 text-ink-faint"
+              initial={reduced ? undefined : { opacity: 0 }}
+              animate={reduced ? undefined : { opacity: 1 }}
+              transition={{ duration: 1, delay: 1.1 }}
+            >
+              Est. {site.founded} · {site.location}
+            </motion.p>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

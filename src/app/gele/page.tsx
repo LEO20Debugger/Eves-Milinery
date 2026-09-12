@@ -37,12 +37,12 @@ export default function GelePage() {
         <div className="space-y-6 md:col-span-5">
           {gelePage.body.map((paragraph, index) => (
             <Reveal key={paragraph} delay={index * 0.08}>
-              <p className="text-bone-dim">{paragraph}</p>
+              <p className="text-ink-dim">{paragraph}</p>
             </Reveal>
           ))}
 
           <Reveal delay={0.3}>
-            <p className="mt-10 border-l border-accent/40 pl-6 text-sm text-bone-faint italic">
+            <p className="mt-10 border-l border-accent/40 pl-6 text-sm text-ink-faint italic">
               {gelePage.note}
             </p>
           </Reveal>
@@ -65,7 +65,7 @@ export default function GelePage() {
       <section className="mt-32">
         <Reveal className="mb-12 flex items-center gap-4 border-b rule pb-4 gutter">
           <span className="eyebrow text-accent">02</span>
-          <span className="eyebrow text-bone-dim">Crowns in the archive</span>
+          <span className="eyebrow text-ink-dim">Crowns in the archive</span>
         </Reveal>
 
         <HorizontalGallery pieces={gele} />
@@ -73,7 +73,7 @@ export default function GelePage() {
 
       <section className="border-t rule py-24 gutter">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <h2 className="max-w-lg font-display text-display-sm font-light text-bone">
+          <h2 className="max-w-lg font-display text-display-sm font-light text-ink">
             Tied for your head, your cloth, your day
           </h2>
           <CtaLink href="/contact?piece=gele" magnetic>

@@ -61,7 +61,7 @@ export default function CollectionsList({ pieces }: { pieces: Piece[] }) {
               }}
               className={cn(
                 "eyebrow relative transition-colors duration-500",
-                selected ? "text-accent" : "text-bone-dim hover:text-bone",
+                selected ? "text-accent" : "text-ink-dim hover:text-ink",
               )}
             >
               {item.label}
@@ -108,15 +108,15 @@ export default function CollectionsList({ pieces }: { pieces: Piece[] }) {
                 >
                   <span className="eyebrow w-8 shrink-0 text-accent">{pad(index + 1)}</span>
 
-                  <span className="font-display text-4xl font-light text-bone transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 md:text-6xl">
+                  <span className="font-display text-4xl font-light text-ink transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:translate-x-3 md:text-6xl">
                     {piece.name}
                   </span>
 
-                  <span className="ml-auto hidden max-w-xs text-right text-sm text-bone-dim lg:block">
+                  <span className="ml-auto hidden max-w-xs text-right text-sm text-ink-dim lg:block">
                     {piece.tagline}
                   </span>
 
-                  <span className="eyebrow w-24 shrink-0 text-right text-bone-faint">
+                  <span className="eyebrow w-24 shrink-0 text-right text-ink-faint">
                     {piece.year}
                   </span>
                 </Link>
@@ -133,7 +133,7 @@ export default function CollectionsList({ pieces }: { pieces: Piece[] }) {
       )}
 
       {visible.length === 0 && (
-        <p className="py-20 text-center text-bone-dim gutter">Nothing in this category yet.</p>
+        <p className="py-20 text-center text-ink-dim gutter">Nothing in this category yet.</p>
       )}
     </>
   );

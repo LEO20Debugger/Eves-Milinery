@@ -15,12 +15,12 @@ export default function Footer() {
           <p className="eyebrow mb-6 text-accent">Enquiries</p>
           <a
             href={`mailto:${site.contact.email}`}
-            className="font-display text-3xl font-light text-bone transition-colors duration-500 hover:text-accent"
+            className="font-display text-3xl font-light text-ink transition-colors duration-500 hover:text-accent"
           >
             {site.contact.email}
           </a>
-          <p className="mt-6 text-sm text-bone-dim">{site.contact.studio}</p>
-          <p className="text-sm text-bone-dim">{site.location}</p>
+          <p className="mt-6 text-sm text-ink-dim">{site.contact.studio}</p>
+          <p className="text-sm text-ink-dim">{site.location}</p>
         </Reveal>
 
         <Reveal delay={0.1} className="flex gap-16">
@@ -31,7 +31,7 @@ export default function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-bone-dim transition-colors duration-500 hover:text-bone"
+                    className="text-sm text-ink-dim transition-colors duration-500 hover:text-ink"
                   >
                     {item.label}
                   </Link>
@@ -48,7 +48,7 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm text-bone-dim transition-colors duration-500 hover:text-bone"
+                    className="text-sm text-ink-dim transition-colors duration-500 hover:text-ink"
                   >
                     {social.label}
                   </a>
@@ -64,10 +64,10 @@ export default function Footer() {
       <SplitText
         as="p"
         lines={[site.name]}
-        className="mt-24 font-display text-display-lg leading-[0.8] font-light text-bone/90"
+        className="mt-24 font-display text-display-lg leading-[0.8] font-light text-ink/90"
       />
 
-      <div className="mt-10 flex flex-col gap-2 border-t rule pt-6 text-xs text-bone-faint sm:flex-row sm:justify-between">
+      <div className="mt-10 flex flex-col gap-2 border-t rule pt-6 text-xs text-ink-faint sm:flex-row sm:justify-between">
         <p>
           &copy; {new Date().getFullYear()} {site.name}. All rights reserved.
         </p>

@@ -47,7 +47,7 @@ export default function AtelierPage() {
         <div className="space-y-6 md:col-span-5 md:col-start-8 md:pt-24">
           {atelier.body.map((paragraph, index) => (
             <Reveal key={paragraph} delay={index * 0.08}>
-              <p className="text-bone-dim">{paragraph}</p>
+              <p className="text-ink-dim">{paragraph}</p>
             </Reveal>
           ))}
         </div>
@@ -57,10 +57,10 @@ export default function AtelierPage() {
       <Stagger className="mt-28 grid grid-cols-1 gap-12 gutter sm:grid-cols-3" stagger={0.12}>
         {atelier.stats.map((stat) => (
           <StaggerItem key={stat.label} className="border-t rule pt-6">
-            <p className="font-display text-display-sm leading-none font-light text-bone">
+            <p className="font-display text-display-sm leading-none font-light text-ink">
               <Counter value={stat.value} suffix={stat.suffix} />
             </p>
-            <p className="eyebrow mt-4 text-bone-faint">{stat.label}</p>
+            <p className="eyebrow mt-4 text-ink-faint">{stat.label}</p>
           </StaggerItem>
         ))}
       </Stagger>
@@ -69,7 +69,7 @@ export default function AtelierPage() {
       <section className="mt-32">
         <Reveal className="mb-12 flex items-center gap-4 border-b rule pb-4 gutter">
           <span className="eyebrow text-accent">02</span>
-          <span className="eyebrow text-bone-dim">How a commission is made</span>
+          <span className="eyebrow text-ink-dim">How a commission is made</span>
         </Reveal>
 
         <ProcessScroll steps={atelier.process} />
@@ -77,11 +77,11 @@ export default function AtelierPage() {
 
       <section className="border-t rule py-24 gutter">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <h2 className="max-w-lg font-display text-display-sm font-light text-bone">
+          <h2 className="max-w-lg font-display text-display-sm font-light text-ink">
             Commissions open by appointment
           </h2>
           <div>
-            <p className="mb-6 max-w-xs text-sm text-bone-dim">{site.contact.studio}</p>
+            <p className="mb-6 max-w-xs text-sm text-ink-dim">{site.contact.studio}</p>
             <CtaLink href="/contact" magnetic>
               Begin a commission
             </CtaLink>

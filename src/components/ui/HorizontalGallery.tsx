@@ -36,7 +36,7 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
       <div className="grid grid-cols-1 gap-12 gutter sm:grid-cols-2">
         {pieces.map((piece) => (
           <Link key={piece.slug} href={`/collections/${piece.slug}`} className="block">
-            <div className="relative aspect-[4/5] overflow-hidden bg-ink-raised">
+            <div className="frame relative aspect-[4/5]">
               <Image
                 src={piece.images[0].src}
                 alt={piece.images[0].alt}
@@ -45,7 +45,7 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
                 className="object-cover"
               />
             </div>
-            <p className="mt-4 font-display text-2xl font-light text-bone">{piece.name}</p>
+            <p className="mt-4 font-display text-2xl font-light text-ink">{piece.name}</p>
           </Link>
         ))}
       </div>
@@ -64,7 +64,7 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
               data-cursor="View"
               className="group relative w-[72vw] shrink-0 sm:w-[46vw] lg:w-[32vw]"
             >
-              <div className="relative aspect-[4/5] overflow-hidden bg-ink-raised">
+              <div className="frame relative aspect-[4/5]">
                 <Image
                   src={piece.images[0].src}
                   alt={piece.images[0].alt}
@@ -76,9 +76,9 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
 
               <div className="mt-5 flex items-baseline gap-4">
                 <span className="eyebrow text-accent">{pad(index + 1)}</span>
-                <span className="font-display text-3xl font-light text-bone">{piece.name}</span>
+                <span className="font-display text-3xl font-light text-ink">{piece.name}</span>
               </div>
-              <p className="mt-2 text-sm text-bone-dim">{piece.tagline}</p>
+              <p className="mt-2 text-sm text-ink-dim">{piece.tagline}</p>
             </Link>
           ))}
         </motion.div>

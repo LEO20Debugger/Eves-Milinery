@@ -24,11 +24,11 @@ function Field({
 }) {
   return (
     <div className="group relative">
-      <label htmlFor={name} className="eyebrow block text-bone-faint">
+      <label htmlFor={name} className="eyebrow block text-ink-faint">
         {label}
       </label>
       {children}
-      <span className="relative block h-px w-full bg-bone/15">
+      <span className="relative block h-px w-full bg-ink/10">
         <span className="absolute inset-y-0 left-0 w-full origin-left scale-x-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-focus-within:scale-x-100" />
       </span>
       {error && (
@@ -41,7 +41,7 @@ function Field({
 }
 
 const inputClass =
-  "w-full bg-transparent pt-3 pb-2 text-bone placeholder:text-bone-faint/60 focus:outline-none";
+  "w-full bg-transparent pt-3 pb-2 text-ink placeholder:text-ink-faint/60 focus:outline-none";
 
 export default function EnquiryForm() {
   const [state, formAction, pending] = useActionState(submitEnquiry, initialState);
@@ -61,7 +61,7 @@ export default function EnquiryForm() {
         role="status"
       >
         <p className="eyebrow text-accent">Enquiry received</p>
-        <p className="mt-6 max-w-md font-display text-4xl font-light text-bone">{state.message}</p>
+        <p className="mt-6 max-w-md font-display text-4xl font-light text-ink">{state.message}</p>
       </motion.div>
     );
   }
@@ -112,17 +112,17 @@ export default function EnquiryForm() {
             defaultValue={presetInterest}
             className={cn(inputClass, "appearance-none")}
           >
-            <option value="" className="bg-ink">
+            <option value="" className="bg-canvas">
               Not sure yet
             </option>
             {categories.map((category) => (
-              <option key={category.id} value={category.id} className="bg-ink">
+              <option key={category.id} value={category.id} className="bg-canvas">
                 {category.label}
               </option>
             ))}
             <optgroup label="A specific piece">
               {pieces.map((piece) => (
-                <option key={piece.slug} value={piece.slug} className="bg-ink">
+                <option key={piece.slug} value={piece.slug} className="bg-canvas">
                   {piece.name}
                 </option>
               ))}
@@ -171,16 +171,18 @@ export default function EnquiryForm() {
       </div>
 
       <div className="flex flex-wrap items-center gap-8 border-t rule pt-8">
+        {/* Apple's solid pill: filled accent, white label, lifts on hover.
+            The old outline-with-wipe button belonged to the dark palette; on a
+            light ground a solid primary action is both more legible and more
+            obviously the thing to press. */}
         <button
           type="submit"
           disabled={pending}
-          className="group relative overflow-hidden border border-bone/30 px-10 py-4 transition-colors duration-500 hover:border-accent disabled:opacity-50"
+          className="group rounded-full bg-accent px-10 py-4 shadow-[0_4px_16px_-4px_rgb(0_113_227_/_0.5)] transition-all duration-300 hover:brightness-110 hover:shadow-[0_8px_24px_-4px_rgb(0_113_227_/_0.55)] active:scale-[0.98] disabled:opacity-50 disabled:shadow-none"
         >
-          <span className="eyebrow relative z-10 text-bone transition-colors duration-500 group-hover:text-ink">
+          <span className="eyebrow text-white">
             {pending ? "Sending" : "Send enquiry"}
           </span>
-          {/* Fill wipes up from the foot of the button on hover. */}
-          <span className="absolute inset-0 origin-bottom scale-y-0 bg-accent transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-y-100" />
         </button>
 
         <AnimatePresence>

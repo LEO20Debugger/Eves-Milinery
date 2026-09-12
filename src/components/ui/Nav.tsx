@@ -83,11 +83,17 @@ export default function Nav() {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-50 gutter">
-        <div className="flex items-center justify-between py-6 mix-blend-difference">
+      {/* A floating glass bar rather than a transparent one.
+          The old dark site used mix-blend-difference so the labels inverted
+          against whatever was behind them; on a light ground that reads as a
+          glitch. Frosting the bar instead means the nav sits legibly over the
+          full-bleed hero photograph AND over the near-white canvas of every
+          other page, with no per-route special-casing. */}
+      <header className="fixed inset-x-0 top-0 z-50 gutter pt-4">
+        <div className="glass flex items-center justify-between rounded-[var(--radius-glass)] px-6 py-4">
           <Link
             href="/"
-            className="group font-display text-xl leading-none font-light tracking-tight text-bone"
+            className="group font-display text-xl leading-none font-light tracking-tight text-ink"
           >
             <SwapLabel>{site.name}</SwapLabel>
           </Link>
@@ -98,7 +104,7 @@ export default function Nav() {
                 key={item.href}
                 href={item.href}
                 className={cn(
-                  "group eyebrow text-bone",
+                  "group eyebrow text-ink",
                   pathname.startsWith(item.href) && "text-accent",
                 )}
               >
@@ -113,7 +119,7 @@ export default function Nav() {
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="menu-panel"
-            className="eyebrow group text-bone md:hidden"
+            className="eyebrow group text-ink md:hidden"
           >
             <SwapLabel>{open ? "Close" : "Menu"}</SwapLabel>
           </button>
@@ -128,7 +134,7 @@ export default function Nav() {
             role="dialog"
             aria-modal="true"
             aria-label="Menu"
-            className="fixed inset-0 z-[55] flex flex-col justify-between bg-ink-soft gutter pt-28 pb-10"
+            className="glass-strong fixed inset-0 z-[55] flex flex-col justify-between gutter pt-32 pb-10"
             initial={reduced ? { opacity: 0 } : { clipPath: "inset(0% 0% 100% 0%)" }}
             animate={reduced ? { opacity: 1 } : { clipPath: "inset(0% 0% 0% 0%)" }}
             exit={reduced ? { opacity: 0 } : { clipPath: "inset(0% 0% 100% 0%)" }}
@@ -151,7 +157,7 @@ export default function Nav() {
                     <Link
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className="group flex items-baseline gap-4 font-display text-display-sm font-light text-bone"
+                      className="group flex items-baseline gap-4 font-display text-display-sm font-light text-ink"
                     >
                       <span className="eyebrow text-accent">{pad(index + 1)}</span>
                       <SwapLabel>{item.label}</SwapLabel>
@@ -162,7 +168,7 @@ export default function Nav() {
             </nav>
 
             <div className="flex flex-wrap items-end justify-between gap-6">
-              <a href={`mailto:${site.contact.email}`} className="eyebrow group text-bone-dim">
+              <a href={`mailto:${site.contact.email}`} className="eyebrow group text-ink-dim">
                 <SwapLabel>{site.contact.email}</SwapLabel>
               </a>
               <div className="flex gap-6">
@@ -172,7 +178,7 @@ export default function Nav() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="eyebrow group text-bone-dim"
+                    className="eyebrow group text-ink-dim"
                   >
                     <SwapLabel>{social.label}</SwapLabel>
                   </a>
