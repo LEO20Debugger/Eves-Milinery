@@ -8,6 +8,15 @@ const SESSION_KEY = "eves-preloader-shown";
 /** Hard cap. A preloader that outstays this stops being an entrance. */
 const DURATION_MS = 1800;
 
+/* Module scope, not component state, on purpose.
+   React Strict Mode runs effects twice in development: mount, clean up, mount
+   again. If the sessionStorage check lived inside the effect, the second run
+   would read the key the first run had just written, bail out early, and never
+   restart the animation frame — leaving the preloader on screen at 0 forever.
+   Deciding once per module keeps both runs in agreement. */
+let decided = false;
+let shouldShow = false;
+
 /**
  * First-visit entrance.
  *
@@ -26,13 +35,18 @@ export default function Preloader() {
 
   useEffect(() => {
     if (reduced) return;
-    // Reading sessionStorage can throw in privacy modes — never fatal.
-    try {
-      if (sessionStorage.getItem(SESSION_KEY)) return;
-      sessionStorage.setItem(SESSION_KEY, "1");
-    } catch {
-      return;
+
+    if (!decided) {
+      decided = true;
+      // Reading sessionStorage can throw in privacy modes — never fatal.
+      try {
+        shouldShow = !sessionStorage.getItem(SESSION_KEY);
+        sessionStorage.setItem(SESSION_KEY, "1");
+      } catch {
+        shouldShow = false;
+      }
     }
+    if (!shouldShow) return;
 
     setActive(true);
     document.body.style.overflow = "hidden";
@@ -43,8 +57,13 @@ export default function Preloader() {
       const progress = Math.min(1, (now - start) / DURATION_MS);
       // Ease-out so the number decelerates into 100 rather than snapping.
       setCount(Math.round((1 - Math.pow(1 - progress, 3)) * 100));
-      if (progress < 1) frame = requestAnimationFrame(tick);
-      else setActive(false);
+      if (progress < 1) {
+        frame = requestAnimationFrame(tick);
+      } else {
+        // Never replay, even if the effect is run again.
+        shouldShow = false;
+        setActive(false);
+      }
     };
     frame = requestAnimationFrame(tick);
 
