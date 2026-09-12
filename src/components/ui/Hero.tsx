@@ -41,9 +41,13 @@ export default function Hero() {
         />
       </motion.div>
 
-      <div className="relative flex h-full items-end gutter pb-14">
+      <div className="relative flex h-full items-end gutter pb-12">
+        {/* `min-w-0` is load-bearing: a flex item defaults to `min-width: auto`,
+            which lets it grow past `max-w-*` to fit its longest word. Without
+            it the display-size headline forces this panel to full width and the
+            whole slab overflows up behind the fixed nav. */}
         <motion.div
-          className="glass w-full max-w-3xl rounded-[var(--radius-glass)] p-8 md:p-12"
+          className="glass w-full max-w-lg min-w-0 rounded-[var(--radius-glass)] p-7 md:p-9"
           style={reduced ? undefined : { y: panelY, opacity: panelOpacity }}
         >
           <SplitText
@@ -51,12 +55,12 @@ export default function Hero() {
             immediate
             delay={0.35}
             lines={heroLines}
-            className="font-display text-display font-light text-ink"
+            className="font-display text-[clamp(2rem,4vw,3.75rem)] leading-[1.02] font-light text-ink"
           />
 
-          <div className="mt-8 flex flex-col gap-6 border-t rule pt-6 md:flex-row md:items-start md:justify-between">
+          <div className="mt-6 flex flex-col gap-4 border-t rule pt-5">
             <motion.p
-              className="max-w-md text-balance text-ink-dim"
+              className="max-w-sm text-balance text-sm text-ink-dim"
               initial={reduced ? undefined : { opacity: 0, y: 20 }}
               animate={reduced ? undefined : { opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
@@ -65,7 +69,7 @@ export default function Hero() {
             </motion.p>
 
             <motion.p
-              className="eyebrow shrink-0 text-ink-faint"
+              className="eyebrow text-ink-faint"
               initial={reduced ? undefined : { opacity: 0 }}
               animate={reduced ? undefined : { opacity: 1 }}
               transition={{ duration: 1, delay: 1.1 }}
