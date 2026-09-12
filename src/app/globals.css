@@ -1,0 +1,129 @@
+@import "tailwindcss";
+
+/* ── Design tokens ────────────────────────────────────────────────────────
+   Eve's Millinery runs a single fixed editorial palette. The site is not
+   theme-switchable by design: the dark ground IS the brand.
+   ────────────────────────────────────────────────────────────────────── */
+@theme {
+  --color-ink: #0b0a09;
+  --color-ink-soft: #141210;
+  --color-ink-raised: #1c1917;
+  --color-bone: #ede7dd;
+  --color-bone-dim: #a49d92;
+  --color-bone-faint: #6b655d;
+  --color-gold: #b08d57;
+  --color-gold-soft: #c9a877;
+
+  --font-display: var(--font-cormorant), "Times New Roman", serif;
+  --font-sans: var(--font-jost), ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid editorial type scale. Large end is deliberately very large. */
+  --text-eyebrow: 0.6875rem;
+  --text-display-sm: clamp(2.25rem, 5vw, 3.75rem);
+  --text-display: clamp(3rem, 9vw, 7.5rem);
+  --text-display-lg: clamp(3.75rem, 13vw, 12rem);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+@layer base {
+  html {
+    background-color: var(--color-ink);
+    color-scheme: dark;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Lenis drives scrolling; native smooth scroll would fight it. */
+  html.lenis,
+  html.lenis body {
+    height: auto;
+  }
+  .lenis.lenis-smooth {
+    scroll-behavior: auto !important;
+  }
+  .lenis.lenis-stopped {
+    overflow: hidden;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-bone);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.7;
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background-color: var(--color-gold);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 1px solid var(--color-gold);
+    outline-offset: 4px;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+
+  /* The custom cursor replaces the native one on fine-pointer devices only. */
+  @media (hover: hover) and (pointer: fine) {
+    html.has-custom-cursor,
+    html.has-custom-cursor * {
+      cursor: none !important;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Small, wide-tracked uppercase label used for eyebrows and nav. */
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: var(--text-eyebrow);
+    font-weight: 400;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .rule {
+    border-color: color-mix(in srgb, var(--color-bone) 12%, transparent);
+  }
+
+  /* Page gutter. Wide margins are doing a lot of the "expensive" work. */
+  .gutter {
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .gutter { padding-inline: 3rem; }
+  }
+  @media (min-width: 1280px) {
+    .gutter { padding-inline: 5rem; }
+  }
+
+  /* Masks a line of text so it can rise into view from nothing. */
+  .line-mask {
+    display: block;
+    overflow: hidden;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+}
