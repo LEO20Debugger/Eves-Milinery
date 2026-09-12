@@ -19,8 +19,6 @@ type Props = {
   delay?: number;
   /** Skew the image into the direction of scroll. Use sparingly. */
   velocity?: boolean;
-  /** Slow, continuous drift — reserved for the hero. */
-  drift?: boolean;
 };
 
 /**
@@ -42,7 +40,6 @@ export default function MaskReveal({
   priority = false,
   delay = 0,
   velocity = false,
-  drift = false,
 }: Props) {
   const reduced = useReducedMotion();
   const factor = useScrollVelocityFactor();
@@ -74,7 +71,7 @@ export default function MaskReveal({
           height={height}
           sizes={sizes}
           priority={priority}
-          className={cn("h-full w-full object-cover", drift && !reduced && "hero-drift", className)}
+          className={cn("h-full w-full object-cover", className)}
         />
       </motion.div>
     </motion.div>

@@ -32,6 +32,11 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+# ...but the template belongs in the repo: it documents what Vercel needs set.
+!.env.example
+
+# lighthouse ci output
+.lighthouseci/
 
 # vercel
 .vercel

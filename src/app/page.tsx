@@ -7,6 +7,7 @@ import PieceCard from "@/components/ui/PieceCard";
 import CtaLink from "@/components/ui/CtaLink";
 import Marquee from "@/components/motion/Marquee";
 import MaskReveal from "@/components/motion/MaskReveal";
+import SplitText from "@/components/motion/SplitText";
 import Parallax from "@/components/motion/Parallax";
 import Reveal from "@/components/motion/Reveal";
 import { Stagger, StaggerItem } from "@/components/motion/Stagger";
@@ -108,9 +109,10 @@ export default function Home() {
               <span className="eyebrow text-bone-dim">{gelePage.eyebrow}</span>
             </Reveal>
 
-            <h2 className="font-display text-display font-light text-bone">
-              {gelePage.lines.join(" ")}
-            </h2>
+            <SplitText
+              lines={gelePage.lines}
+              className="font-display text-display font-light text-bone"
+            />
 
             <Reveal delay={0.1}>
               <p className="mt-8 max-w-md text-balance text-bone-dim">{gelePage.standfirst}</p>

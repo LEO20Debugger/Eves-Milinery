@@ -6,7 +6,6 @@ import {
   useAnimationFrame,
   useMotionValue,
   useReducedMotion,
-  useTransform,
 } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useScrollVelocityFactor } from "@/lib/hooks";
@@ -83,10 +82,4 @@ export default function Marquee({ items, className, speed = 28 }: Props) {
       </motion.div>
     </div>
   );
-}
-
-/** Reads the velocity factor as a plain number. Exported for sibling effects. */
-export function useVelocityScale() {
-  const factor = useScrollVelocityFactor();
-  return useTransform(factor, (v) => 1 + Math.abs(v) * 0.03);
 }
