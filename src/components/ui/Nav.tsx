@@ -51,10 +51,16 @@ export default function Nav() {
       }
       if (event.key !== "Tab") return;
 
-      const focusable = panelRef.current?.querySelectorAll<HTMLElement>(
+      // The Close toggle lives in the header, OUTSIDE the panel, so that it
+      // renders above it. It still has to be part of the focus cycle, or a
+      // keyboard user can reach every link but never the way out.
+      const inPanel = panelRef.current?.querySelectorAll<HTMLElement>(
         "a[href], button:not([disabled])",
       );
-      if (!focusable?.length) return;
+      if (!inPanel?.length) return;
+      const focusable = [...inPanel, toggleRef.current].filter(
+        (node): node is HTMLElement => Boolean(node),
+      );
       const first = focusable[0];
       const last = focusable[focusable.length - 1];
 
@@ -89,7 +95,11 @@ export default function Nav() {
           glitch. Frosting the bar instead means the nav sits legibly over the
           full-bleed hero photograph AND over the near-white canvas of every
           other page, with no per-route special-casing. */}
-      <header className="fixed inset-x-0 top-0 z-50 gutter pt-4">
+      {/* z-[56] sits ABOVE the menu panel's z-[55] on purpose. The panel is
+          fixed inset-0, so at any lower z-index it covers the header and takes
+          the Menu/Close toggle with it — leaving a phone with no way out of the
+          menu at all, since there is no Escape key. */}
+      <header className="fixed inset-x-0 top-0 z-[56] gutter pt-4">
         <div className="glass flex items-center justify-between rounded-[var(--radius-glass)] px-6 py-4">
           <Link
             href="/"
@@ -119,7 +129,10 @@ export default function Nav() {
             onClick={() => setOpen((value) => !value)}
             aria-expanded={open}
             aria-controls="menu-panel"
-            className="eyebrow group text-ink md:hidden"
+            /* The label itself is only ~47x11px. Negative margin cancelling
+               equal padding grows the tap target to ~44px without moving
+               anything in the layout. */
+            className="eyebrow group -m-4 p-4 text-ink md:hidden"
           >
             <SwapLabel>{open ? "Close" : "Menu"}</SwapLabel>
           </button>

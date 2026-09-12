@@ -29,7 +29,11 @@ export default function Hero() {
   const panelOpacity = useTransform(scrollY, [0, 600], [1, 0]);
 
   return (
-    <section className="relative h-[100svh] w-full overflow-hidden">
+    /* Shorter on phones on purpose. A 16:9 photograph forced into a full-height
+       portrait viewport shows only ~25% of its width; at 85svh that rises to
+       ~30%, which is the difference between seeing the whole headpiece and
+       seeing a slice of it. Desktop keeps the full-height frame. */
+    <section className="relative h-[85svh] w-full overflow-hidden md:h-[100svh]">
       <motion.div className="absolute inset-0" style={reduced ? undefined : { y }}>
         <Image
           src="/images/hero.jpg"
@@ -37,7 +41,19 @@ export default function Hero() {
           fill
           priority
           sizes="100vw"
-          className={`object-cover ${reduced ? "" : "hero-drift"}`}
+          /* The hero art is composed with the subject in the right half and her
+             headpiece near the top edge, so the default centre crop fails at
+             both ends:
+             - Wide, short windows crop top and bottom, cutting off the hat.
+               `md:object-top` anchors the crop to the top so the hat survives;
+               the bottom of the frame is garment and can be lost safely.
+             - Narrow windows crop the sides hard. The subject (hat and face)
+               occupies 49%-79% of the image width, centred at 66%, so the crop
+               is anchored at 70% — biased slightly right of the subject's
+               centre to favour her face over the far edge of the brim.
+               Measured from the file, not guessed: at 78% the window centred on
+               the right edge of her face and cut it off. */
+          className={`object-cover object-[70%_50%] md:object-top ${reduced ? "" : "hero-drift"}`}
         />
       </motion.div>
 

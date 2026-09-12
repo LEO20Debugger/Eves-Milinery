@@ -245,6 +245,10 @@
 
 .hero-drift {
   animation: hero-drift 20s var(--ease-out-expo) infinite alternate;
+  /* Grow downward only. With the default centre origin the drift eats the top
+     of the frame as it scales, which clips the headpiece — the one part of the
+     hero image that must never be cropped. */
+  transform-origin: 50% 0%;
   will-change: transform;
 }
 
