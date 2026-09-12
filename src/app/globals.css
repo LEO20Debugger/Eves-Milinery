@@ -127,3 +127,20 @@
     margin-bottom: -0.12em;
   }
 }
+
+/* Slow, continuous drift on the hero image so the page is never entirely
+   static. 20s and 6% — any faster or larger and it reads as a Ken Burns
+   slideshow rather than a held breath. */
+@keyframes hero-drift {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+.hero-drift {
+  animation: hero-drift 20s var(--ease-out-expo) infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-drift { animation: none; }
+}
