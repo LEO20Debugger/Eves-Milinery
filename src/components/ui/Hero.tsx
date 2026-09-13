@@ -4,67 +4,71 @@ import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { heroLines, heroStandfirst, site } from "@/content/site";
 import SplitText from "@/components/motion/SplitText";
+import { useMediaQuery } from "@/lib/hooks";
 
 /**
  * The home hero.
  *
- * Liquid Glass version: the photograph runs full-bleed and the headline sits on
- * a frosted panel over it. That panel is doing real work — it guarantees the
- * type stays legible no matter how light or busy the photograph behind it is,
- * which plain white-on-image never can. It is also the clearest statement of
- * the design language, so it happens once, here, at full strength.
+ * Two layouts, because the same one cannot work at both ends:
  *
- * Three motion layers, all deliberately small: a slow continuous scale drift so
- * the frame is never dead, ~10% scroll parallax, and the headline rising line by
- * line out of its masks.
+ * DESKTOP — the photograph runs full-bleed and the headline sits on a frosted
+ * panel over the empty left side of the frame. That panel guarantees legibility
+ * over any photograph, and is the clearest statement of the design language.
+ *
+ * MOBILE — the panel moves BELOW the image instead of over it. A 16:9 photo
+ * cropped into a portrait viewport keeps only ~30% of its width, so there is no
+ * empty backdrop left to put glass on; overlaying it there covers the subject's
+ * face, which is the one thing the glass must never do. The panel still laps
+ * over the bottom edge of the image so the frosted effect is visible, but it
+ * laps over her shoulder, not her face.
  */
 export default function Hero() {
   const reduced = useReducedMotion();
+  const isDesktop = useMediaQuery("(min-width: 768px)");
   const { scrollY } = useScroll();
 
   // ~10% of viewport travel across the first screen.
   const y = useTransform(scrollY, [0, 900], [0, 90]);
-  // The glass panel drifts up and fades as you leave the hero.
   const panelY = useTransform(scrollY, [0, 700], [0, -60]);
   const panelOpacity = useTransform(scrollY, [0, 600], [1, 0]);
 
+  // Parallax only where the image is absolutely positioned. On mobile the image
+  // is in normal flow, so translating it would tear a gap off the top edge.
+  const animateImage = isDesktop && !reduced;
+  const animatePanel = isDesktop && !reduced;
+
   return (
-    /* Shorter on phones on purpose. A 16:9 photograph forced into a full-height
-       portrait viewport shows only ~25% of its width; at 85svh that rises to
-       ~30%, which is the difference between seeing the whole headpiece and
-       seeing a slice of it. Desktop keeps the full-height frame. */
-    <section className="relative h-[85svh] w-full overflow-hidden md:h-[100svh]">
-      <motion.div className="absolute inset-0" style={reduced ? undefined : { y }}>
+    <section className="relative w-full overflow-hidden md:h-[100svh]">
+      <motion.div
+        className="relative h-[58svh] w-full md:absolute md:inset-0 md:h-full"
+        style={animateImage ? { y } : undefined}
+      >
         <Image
           src="/images/hero.jpg"
           alt="A hand-blocked occasion headpiece photographed in bright, soft studio light"
           fill
           priority
           sizes="100vw"
-          /* The hero art is composed with the subject in the right half and her
-             headpiece near the top edge, so the default centre crop fails at
-             both ends:
-             - Wide, short windows crop top and bottom, cutting off the hat.
-               `md:object-top` anchors the crop to the top so the hat survives;
-               the bottom of the frame is garment and can be lost safely.
-             - Narrow windows crop the sides hard. The subject (hat and face)
-               occupies 49%-79% of the image width, centred at 66%, so the crop
-               is anchored at 70% — biased slightly right of the subject's
-               centre to favour her face over the far edge of the brim.
-               Measured from the file, not guessed: at 78% the window centred on
-               the right edge of her face and cut it off. */
-          className={`object-cover object-[70%_50%] md:object-top ${reduced ? "" : "hero-drift"}`}
+          /* The subject (hat and face) occupies 49%-79% of the image width,
+             centred at 66% — measured from the file, not guessed.
+             - Narrow windows crop the sides hard, so the crop is anchored at
+               66% to centre her rather than push her against an edge.
+             - Wide, short windows crop top and bottom instead, and the hat sits
+               close to the top edge, so `md:object-top` protects it. The bottom
+               of the frame is garment and can be lost safely. */
+          className={`object-cover object-[66%_50%] md:object-top ${
+            reduced ? "" : "hero-drift"
+          }`}
         />
       </motion.div>
 
-      <div className="relative flex h-full items-end gutter pb-12">
+      <div className="relative z-10 -mt-12 gutter pb-4 md:absolute md:inset-0 md:mt-0 md:flex md:h-full md:items-end md:pb-12">
         {/* `min-w-0` is load-bearing: a flex item defaults to `min-width: auto`,
             which lets it grow past `max-w-*` to fit its longest word. Without
-            it the display-size headline forces this panel to full width and the
-            whole slab overflows up behind the fixed nav. */}
+            it the display-size headline forces this panel to full width. */}
         <motion.div
           className="glass w-full max-w-lg min-w-0 rounded-[var(--radius-glass)] p-7 md:p-9"
-          style={reduced ? undefined : { y: panelY, opacity: panelOpacity }}
+          style={animatePanel ? { y: panelY, opacity: panelOpacity } : undefined}
         >
           <SplitText
             as="h1"

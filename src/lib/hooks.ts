@@ -55,3 +55,23 @@ export function useHasFinePointer() {
     () => false,
   );
 }
+
+/**
+ * Generic media query hook, same external-store pattern as above.
+ *
+ * Used where a layout difference has to reach JavaScript rather than just CSS
+ * — scroll-linked transforms, for instance, can't be turned off by a
+ * breakpoint. Server snapshot is `false`, so the markup always assumes the
+ * small-screen case and the enhancement is added after hydration.
+ */
+export function useMediaQuery(query: string) {
+  return useSyncExternalStore(
+    (onChange) => {
+      const mq = window.matchMedia(query);
+      mq.addEventListener("change", onChange);
+      return () => mq.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
+}
