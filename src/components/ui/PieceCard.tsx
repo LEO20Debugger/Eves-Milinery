@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { blurProps } from "@/lib/image";
 import { motion, useReducedMotion } from "motion/react";
 import type { Piece } from "@/content/pieces";
 import { categoryLabel } from "@/content/pieces";
@@ -58,6 +59,7 @@ export default function PieceCard({
             sizes={sizes}
             priority={priority}
             className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+            {...blurProps(cover.src)}
           />
         </motion.div>
 

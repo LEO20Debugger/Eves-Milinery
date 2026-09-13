@@ -7,6 +7,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { nav, site } from "@/content/site";
 import { CURTAIN, EXPO_OUT } from "@/lib/motion";
 import { cn, pad } from "@/lib/utils";
+import GlassSheen from "@/components/ui/GlassSheen";
+import SocialIcon from "@/components/ui/SocialIcon";
 
 /** A label that swaps vertically on hover — one duplicate translating through. */
 function SwapLabel({ children, className }: { children: string; className?: string }) {
@@ -27,10 +29,30 @@ function SwapLabel({ children, className }: { children: string; className?: stri
 
 export default function Nav() {
   const [open, setOpen] = useState(false);
+  const [condensed, setCondensed] = useState(false);
   const pathname = usePathname();
   const reduced = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
   const toggleRef = useRef<HTMLButtonElement>(null);
+  /* The bar tightens once you leave the hero and relaxes again at the top.
+     Deliberately a threshold, not a continuous animation: padding and shadow
+     are layout and paint, so animating them every frame would thrash. Crossing
+     the threshold flips one class and CSS transitions the rest — two reflows
+     per page rather than sixty per second.
+
+     A passive scroll listener rather than Motion's scroll tracking, because
+     this is chrome state, not animation: it has to stay correct even when the
+     animation loop is throttled, as browsers do for embedded or backgrounded
+     views. The handler is a single numeric comparison. */
+  useEffect(() => {
+    const onScroll = () => {
+      const next = window.scrollY > 80;
+      setCondensed((current) => (current === next ? current : next));
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   // The panel closes from the link handlers below rather than by reacting to
   // the pathname, so there is no render-then-correct pass on every navigation.
@@ -99,8 +121,19 @@ export default function Nav() {
           fixed inset-0, so at any lower z-index it covers the header and takes
           the Menu/Close toggle with it — leaving a phone with no way out of the
           menu at all, since there is no Escape key. */}
-      <header className="fixed inset-x-0 top-0 z-[56] gutter pt-4">
-        <div className="glass flex items-center justify-between rounded-[var(--radius-glass)] px-6 py-4">
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-[56] gutter transition-[padding] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          condensed ? "pt-2" : "pt-4",
+        )}
+      >
+        <div
+          className={cn(
+            "glass relative flex items-center justify-between overflow-hidden rounded-[var(--radius-glass)] px-6 transition-[padding,box-shadow] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]",
+            condensed ? "py-2.5 shadow-lg" : "py-4",
+          )}
+        >
+          <GlassSheen />
           <Link
             href="/"
             className="group font-display text-xl leading-none font-light tracking-tight text-ink"
@@ -191,8 +224,11 @@ export default function Nav() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="eyebrow group text-ink-dim"
+                    className="eyebrow group flex items-center gap-2 text-ink-dim"
                   >
+                    {/* Icon sits outside SwapLabel so it stays put while the
+                        label does its vertical swap on hover. */}
+                    <SocialIcon name={social.icon} />
                     <SwapLabel>{social.label}</SwapLabel>
                   </a>
                 ))}

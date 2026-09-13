@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import Image from "next/image";
+import { blurProps } from "@/lib/image";
 import Link from "next/link";
 import { motion, useMotionValue, useReducedMotion, useScroll, useTransform } from "motion/react";
 import type { Piece } from "@/content/pieces";
@@ -107,6 +108,7 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
                 fill
                 sizes="(max-width: 640px) 100vw, 50vw"
                 className="object-cover"
+                {...blurProps(piece.images[0].src)}
               />
             </div>
             <p className="mt-4 font-display text-2xl font-light text-ink">{piece.name}</p>
@@ -153,6 +155,7 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
                   fill
                   sizes="(max-width: 640px) 70vw, (max-width: 1024px) 45vw, 32vw"
                   className="object-cover transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.04]"
+                  {...blurProps(piece.images[0].src)}
                 />
               </div>
 

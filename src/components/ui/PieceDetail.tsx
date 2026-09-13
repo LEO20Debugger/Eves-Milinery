@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { blurProps } from "@/lib/image";
 import Link from "next/link";
 import { motion, useReducedMotion } from "motion/react";
 import { categoryLabel, type Piece } from "@/content/pieces";
@@ -64,6 +65,7 @@ export default function PieceDetail({ piece, related }: Props) {
             priority
             sizes="(max-width: 768px) 100vw, 70vw"
             className="object-cover"
+            {...blurProps(cover.src)}
           />
         </motion.div>
       </div>

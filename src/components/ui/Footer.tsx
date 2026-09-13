@@ -2,6 +2,7 @@ import Link from "next/link";
 import { nav, site } from "@/content/site";
 import SplitText from "@/components/motion/SplitText";
 import Reveal from "@/components/motion/Reveal";
+import SocialIcon from "@/components/ui/SocialIcon";
 
 /**
  * The last beat of every page: an oversized wordmark that rises out of a mask
@@ -48,8 +49,9 @@ export default function Footer() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-sm text-ink-dim transition-colors duration-500 hover:text-ink"
+                    className="inline-flex items-center gap-2.5 text-sm text-ink-dim transition-colors duration-500 hover:text-accent"
                   >
+                    <SocialIcon name={social.icon} />
                     {social.label}
                   </a>
                 </li>

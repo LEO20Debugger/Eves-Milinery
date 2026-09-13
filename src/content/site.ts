@@ -31,6 +31,9 @@ export const site = {
     {
       label: "Instagram",
       href: "https://instagram.com/eves_millinery_and_accessories",
+      // Key into the glyph map in components/ui/SocialIcon.tsx. Available:
+      // instagram, whatsapp, pinterest, tiktok, facebook.
+      icon: "instagram",
     },
     // Pinterest removed: no profile has been supplied, and the placeholder was
     // pointing at pinterest.com's homepage on a live site. To add it back, put

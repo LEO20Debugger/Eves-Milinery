@@ -5,6 +5,7 @@ import { contactPage, site } from "@/content/site";
 import SectionHeading from "@/components/ui/SectionHeading";
 import EnquiryForm from "@/components/ui/EnquiryForm";
 import Reveal from "@/components/motion/Reveal";
+import SocialIcon from "@/components/ui/SocialIcon";
 
 export const metadata: Metadata = {
   title: "Enquire",
@@ -53,13 +54,18 @@ export default function ContactPage() {
             >
               {site.contact.phone}
             </a>
+            {/* WhatsApp is given real weight rather than being a third grey
+                line. For a Lagos atelier it is likely the highest-intent
+                contact route on the page, and as plain text between a phone
+                number and an email it read as a caption, not an action. */}
             <a
               href={`https://wa.me/${whatsapp}`}
               target="_blank"
               rel="noreferrer"
-              className="mt-2 inline-block text-ink-dim transition-colors duration-500 hover:text-accent"
+              className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-ink/15 px-5 py-2.5 text-sm text-ink transition-colors duration-300 hover:border-accent hover:text-accent"
             >
-              WhatsApp
+              <SocialIcon name="whatsapp" />
+              Message on WhatsApp
             </a>
           </Reveal>
 
@@ -83,8 +89,9 @@ export default function ContactPage() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="text-ink-dim transition-colors duration-500 hover:text-accent"
+                    className="inline-flex items-center gap-2.5 text-ink-dim transition-colors duration-500 hover:text-accent"
                   >
+                    <SocialIcon name={social.icon} />
                     {social.label}
                   </a>
                 </li>

@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
+import { blurProps } from "@/lib/image";
 import { AnimatePresence, motion, useMotionValue, useSpring } from "motion/react";
 import type { PieceImage } from "@/content/pieces";
 
@@ -57,7 +58,14 @@ export default function HoverImage({ image, activeKey }: Props) {
             exit={{ clipPath: "inset(0% 0% 100% 0%)", scale: 1.02 }}
             transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
           >
-            <Image src={image.src} alt="" fill sizes={`${WIDTH}px`} className="object-cover" />
+            <Image
+              src={image.src}
+              alt=""
+              fill
+              sizes={`${WIDTH}px`}
+              className="object-cover"
+              {...blurProps(image.src)}
+            />
           </motion.div>
         )}
       </AnimatePresence>

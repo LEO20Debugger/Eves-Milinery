@@ -5,6 +5,8 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 import { heroLines, heroStandfirst, site } from "@/content/site";
 import SplitText from "@/components/motion/SplitText";
 import { useMediaQuery } from "@/lib/hooks";
+import { blurFor } from "@/content/blur";
+import GlassSheen from "@/components/ui/GlassSheen";
 
 /**
  * The home hero.
@@ -41,6 +43,9 @@ const {
   height: 1500,
 });
 
+/** Tiny blurred preview, painted under the hero while the real file loads. */
+const heroBlur = blurFor("/images/hero.jpg");
+
 export default function Hero() {
   const reduced = useReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -58,9 +63,16 @@ export default function Hero() {
 
   return (
     <section className="relative w-full overflow-hidden md:h-[100svh]">
+      {/* The hero is a raw <img> inside <picture> for art direction, so it
+          cannot use next/image's `placeholder="blur"`. The blurred preview is
+          painted as a background on the wrapper instead — same effect, and it
+          is covered the instant the real photograph decodes. */}
       <motion.div
-        className="relative h-[58svh] w-full md:absolute md:inset-0 md:h-full"
-        style={animateImage ? { y } : undefined}
+        className="relative h-[58svh] w-full bg-cover bg-center md:absolute md:inset-0 md:h-full"
+        style={{
+          ...(animateImage ? { y } : {}),
+          backgroundImage: heroBlur ? `url(${heroBlur})` : undefined,
+        }}
       >
         {/* Art direction, not just a responsive crop. The phone gets a
             portrait photograph composed for portrait; the desktop gets the
@@ -91,9 +103,11 @@ export default function Hero() {
             which lets it grow past `max-w-*` to fit its longest word. Without
             it the display-size headline forces this panel to full width. */}
         <motion.div
-          className="glass w-full max-w-lg min-w-0 rounded-[var(--radius-glass)] p-7 md:p-9"
+          className="glass relative w-full max-w-lg min-w-0 overflow-hidden rounded-[var(--radius-glass)] p-7 md:p-9"
           style={animatePanel ? { y: panelY, opacity: panelOpacity } : undefined}
         >
+          <GlassSheen />
+
           <SplitText
             as="h1"
             immediate

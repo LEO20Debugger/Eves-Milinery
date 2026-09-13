@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { blurProps } from "@/lib/image";
 import { motion, useReducedMotion, useTransform } from "motion/react";
 import { cn } from "@/lib/utils";
 import { DURATION, EXPO_OUT, VIEWPORT } from "@/lib/motion";
@@ -72,6 +73,7 @@ export default function MaskReveal({
           sizes={sizes}
           priority={priority}
           className={cn("h-full w-full object-cover", className)}
+          {...blurProps(src)}
         />
       </motion.div>
     </motion.div>

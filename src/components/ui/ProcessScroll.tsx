@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import Image from "next/image";
+import { blurProps } from "@/lib/image";
 import {
   AnimatePresence,
   motion,
@@ -49,6 +50,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
                 fill
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
+                {...blurProps(step.image)}
               />
             </div>
             <div>
@@ -82,6 +84,7 @@ export default function ProcessScroll({ steps }: { steps: readonly Step[] }) {
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover"
+                  {...blurProps(step.image)}
                 />
               </motion.div>
             ))}
