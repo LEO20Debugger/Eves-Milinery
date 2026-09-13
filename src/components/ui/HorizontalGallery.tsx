@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
@@ -21,15 +21,37 @@ import { pad } from "@/lib/utils";
 export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
   const reduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+
+  /* How far the track actually has to move, in pixels.
+     This used to be a hardcoded percentage per item, which had no relationship
+     to the real card widths — so the track ran past its own end and parked the
+     last card off to the left, leaving dead space on the right. Measuring
+     instead means the run always finishes exactly as the last card lands. */
+  const [travel, setTravel] = useState(0);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const viewport = viewportRef.current;
+    if (!track || !viewport) return;
+
+    // ResizeObserver fires once on observe, so the initial measurement happens
+    // in its callback rather than synchronously here.
+    const observer = new ResizeObserver(() => {
+      setTravel(Math.max(0, track.scrollWidth - viewport.clientWidth));
+    });
+    observer.observe(track);
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
-  // Travel just under one panel-width per item, leaving the last one resting
-  // in view rather than sliding off the edge.
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${(pieces.length - 1) * 62}%`]);
+  const x = useTransform(scrollYProgress, [0, 1], [0, -travel]);
 
   if (reduced) {
     return (
@@ -53,10 +75,19 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
   }
 
   return (
-    // Tall enough to give the horizontal travel room to happen in.
-    <div ref={ref} className="relative" style={{ height: `${pieces.length * 85}vh` }}>
-      <div className="sticky top-0 flex h-screen items-center overflow-hidden">
-        <motion.div className="flex gap-6 pl-6 md:gap-10 md:pl-12 xl:pl-20" style={{ x }}>
+    /* The section is exactly as tall as one screen plus the horizontal distance
+       to cover, so a pixel of vertical scroll moves the track a pixel sideways
+       and the pin releases the moment the run ends. */
+    <div ref={ref} className="relative" style={{ height: `calc(100vh + ${travel}px)` }}>
+      <div
+        ref={viewportRef}
+        className="sticky top-0 flex h-screen items-center overflow-hidden"
+      >
+        <motion.div
+          ref={trackRef}
+          className="flex gap-6 pl-6 md:gap-10 md:pl-12 xl:pl-20"
+          style={{ x }}
+        >
           {pieces.map((piece, index) => (
             <Link
               key={piece.slug}
@@ -81,6 +112,12 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
               <p className="mt-2 text-sm text-ink-dim">{piece.tagline}</p>
             </Link>
           ))}
+
+          {/* Trailing gutter. A flex container's own padding-right is not
+              reliably counted in `scrollWidth`, so the end margin is a real
+              element — otherwise the last card finishes flush against the
+              right edge of the screen. */}
+          <div aria-hidden className="w-6 shrink-0 md:w-12 xl:w-20" />
         </motion.div>
       </div>
     </div>
