@@ -18,14 +18,24 @@ export const site = {
 
   contact: {
     email: "atelier@evesmillinery.com", // TODO
-    phone: "+44 20 0000 0000", // TODO
-    whatsapp: "+442000000000", // TODO — digits only, no spaces or symbols
+    // Real number: 0902 307 2646, written in international form so the tel:
+    // and wa.me links work for anyone outside Nigeria.
+    // TODO: confirm this is also the number to CALL — it was given as the
+    // WhatsApp number, and the old placeholder here was a UK landline.
+    phone: "+234 902 307 2646",
+    whatsapp: "2349023072646", // digits only, no spaces or symbols
     studio: "By appointment only", // TODO
   },
 
   socials: [
-    { label: "Instagram", href: "https://instagram.com/" }, // TODO
-    { label: "Pinterest", href: "https://pinterest.com/" }, // TODO
+    {
+      label: "Instagram",
+      href: "https://instagram.com/eves_millinery_and_accessories",
+    },
+    // Pinterest removed: no profile has been supplied, and the placeholder was
+    // pointing at pinterest.com's homepage on a live site. To add it back, put
+    // an entry here — the nav overlay, footer and contact page all read this
+    // array, so nothing else needs changing.
   ],
 } as const;
 
