@@ -34,16 +34,40 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
   useEffect(() => {
     const track = trackRef.current;
     const viewport = viewportRef.current;
+    console.log("[gallery] effect ran", { track: !!track, viewport: !!viewport });
     if (!track || !viewport) return;
 
-    // ResizeObserver fires once on observe, so the initial measurement happens
-    // in its callback rather than synchronously here.
-    const observer = new ResizeObserver(() => {
-      setTravel(Math.max(0, track.scrollWidth - viewport.clientWidth));
-    });
-    observer.observe(track);
-    observer.observe(viewport);
-    return () => observer.disconnect();
+    const measure = () => {
+      const v = Math.max(0, track.scrollWidth - viewport.clientWidth);
+      console.log("[gallery] measure", { scrollWidth: track.scrollWidth, clientWidth: viewport.clientWidth, travel: v });
+      setTravel(v);
+    };
+
+    /* Measured from several triggers on purpose. The track's width only
+       settles once the images have laid out, and no single signal is
+       dependable: ResizeObserver is the right tool but is throttled or
+       suppressed in some embedded browsers, and a single post-mount frame can
+       land before a slow image resolves. Together these always converge, and
+       re-measuring is cheap. */
+    const frame = requestAnimationFrame(measure);
+    window.addEventListener("resize", measure);
+
+    const images = Array.from(track.querySelectorAll("img"));
+    for (const image of images) {
+      if (!image.complete) image.addEventListener("load", measure, { once: true });
+    }
+
+    const observer =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(measure) : null;
+    observer?.observe(track);
+    observer?.observe(viewport);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("resize", measure);
+      for (const image of images) image.removeEventListener("load", measure);
+      observer?.disconnect();
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -83,9 +107,14 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
         ref={viewportRef}
         className="sticky top-0 flex h-screen items-center overflow-hidden"
       >
+        {/* `w-max` is load-bearing for the measurement. Without it the track's
+            own box stays clamped to the viewport width while its content
+            overflows, so ResizeObserver never sees the content grow as images
+            settle and the measured travel stays stuck at 0. Sizing the box to
+            its content makes the observer fire on every real change. */}
         <motion.div
           ref={trackRef}
-          className="flex gap-6 pl-6 md:gap-10 md:pl-12 xl:pl-20"
+          className="flex w-max gap-6 pl-6 md:gap-10 md:pl-12 xl:pl-20"
           style={{ x }}
         >
           {pieces.map((piece, index) => (

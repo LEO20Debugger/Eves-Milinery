@@ -43,10 +43,18 @@ export default function PieceDetail({ piece, related }: Props) {
 
       {/* Cover. `layoutId` matches the card on the index, so arriving here from
           the grid animates the image into place instead of cutting. */}
-      <div className="mt-16 gutter">
+      {/* The cover keeps the photograph's own aspect ratio rather than being
+          forced into a fixed landscape frame. These are 4:5 portraits, and
+          cropping one to 16:10 zoomed so far into the subject's face that the
+          headpiece — the actual product — fell outside the frame.
+
+          Full width on mobile, height-capped on desktop so a tall portrait
+          cannot swallow the whole screen. */}
+      <div className="mt-16 flex justify-center gutter">
         <motion.div
           layoutId={reduced ? undefined : `piece-${piece.slug}`}
-          className="frame relative aspect-[16/10] w-full"
+          className="frame relative w-full md:h-[78svh] md:w-auto"
+          style={{ aspectRatio: `${cover.width} / ${cover.height}` }}
           transition={{ duration: DURATION.slow, ease: EXPO_OUT }}
         >
           <Image
@@ -54,7 +62,7 @@ export default function PieceDetail({ piece, related }: Props) {
             alt={cover.alt}
             fill
             priority
-            sizes="100vw"
+            sizes="(max-width: 768px) 100vw, 70vw"
             className="object-cover"
           />
         </motion.div>
