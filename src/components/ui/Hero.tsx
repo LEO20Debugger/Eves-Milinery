@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { heroLines, heroStandfirst, site } from "@/content/site";
 import SplitText from "@/components/motion/SplitText";
@@ -22,6 +22,25 @@ import { useMediaQuery } from "@/lib/hooks";
  * over the bottom edge of the image so the frosted effect is visible, but it
  * laps over her shoulder, not her face.
  */
+const HERO_ALT =
+  "A hand-blocked occasion headpiece photographed in bright, soft studio light";
+
+/* Built once at module scope — these are pure and never change. */
+const shared = { alt: HERO_ALT, sizes: "100vw", priority: true } as const;
+
+const {
+  props: { srcSet: desktopSrcSet },
+} = getImageProps({ ...shared, src: "/images/hero.jpg", width: 2400, height: 1350 });
+
+const {
+  props: { srcSet: mobileSrcSet, ...imgProps },
+} = getImageProps({
+  ...shared,
+  src: "/images/hero-portrait.jpg",
+  width: 1200,
+  height: 1500,
+});
+
 export default function Hero() {
   const reduced = useReducedMotion();
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -43,23 +62,28 @@ export default function Hero() {
         className="relative h-[58svh] w-full md:absolute md:inset-0 md:h-full"
         style={animateImage ? { y } : undefined}
       >
-        <Image
-          src="/images/hero.jpg"
-          alt="A hand-blocked occasion headpiece photographed in bright, soft studio light"
-          fill
-          priority
-          sizes="100vw"
-          /* The subject (hat and face) occupies 49%-79% of the image width,
-             centred at 66% — measured from the file, not guessed.
-             - Narrow windows crop the sides hard, so the crop is anchored at
-               66% to centre her rather than push her against an edge.
-             - Wide, short windows crop top and bottom instead, and the hat sits
-               close to the top edge, so `md:object-top` protects it. The bottom
-               of the frame is garment and can be lost safely. */
-          className={`object-cover object-[66%_50%] md:object-top ${
-            reduced ? "" : "hero-drift"
-          }`}
-        />
+        {/* Art direction, not just a responsive crop. The phone gets a
+            portrait photograph composed for portrait; the desktop gets the
+            16:9 one. `getImageProps` is Next's supported way to do this: each
+            <source> keeps a full optimized srcSet, and the browser downloads
+            only the one that matches — unlike rendering two <Image>s and
+            hiding one, which downloads both. */}
+        <picture>
+          <source media="(min-width: 768px)" srcSet={desktopSrcSet} sizes="100vw" />
+          <source media="(max-width: 767px)" srcSet={mobileSrcSet} sizes="100vw" />
+          <img
+            {...imgProps}
+            alt={HERO_ALT}
+            /* The subject (hat and face) occupies 49%-79% of the landscape
+               image's width, centred at 66% — measured from the file, not
+               guessed. The portrait crop is composed centred, so it needs no
+               horizontal nudge; `md:object-top` protects the hat on wide,
+               short windows, where the crop takes from top and bottom. */
+            className={`absolute inset-0 h-full w-full object-cover object-center md:object-top ${
+              reduced ? "" : "hero-drift"
+            }`}
+          />
+        </picture>
       </motion.div>
 
       <div className="relative z-10 -mt-12 gutter pb-4 md:absolute md:inset-0 md:mt-0 md:flex md:h-full md:items-end md:pb-12">
