@@ -130,16 +130,16 @@ export default function HorizontalGallery({ pieces }: { pieces: Piece[] }) {
           className="flex w-max gap-6 pl-6 md:gap-10 md:pl-12 xl:pl-20"
           style={{ x }}
         >
+          {/* Cards are sized from viewport HEIGHT, not width. Sizing them by
+              width (32vw and friends) ignores how much vertical room there is,
+              so on a short window the 4:5 image plus its caption grew taller
+              than the pinned frame and `overflow-hidden` sliced the top off the
+              images and the bottom off the captions.
+              The width is therefore expressed in viewport-height units: 41.6svh
+              is 52svh of image height at a 4:5 ratio. Putting it on the card
+              rather than the frame also keeps the caption wrapping to the
+              image's width instead of stretching the card. */}
           {pieces.map((piece, index) => (
-            {/* Cards are sized from viewport HEIGHT, not width. Sizing them by
-                width (32vw and friends) ignores how much vertical room there
-                is, so on a short window the 4:5 image plus its caption grew
-                taller than the pinned frame and `overflow-hidden` sliced the
-                top off the images and the bottom off the captions.
-                The width is therefore expressed in viewport-height units:
-                41.6svh is 52svh of image height at a 4:5 ratio. Putting it on
-                the card rather than the frame also keeps the caption wrapping
-                to the image's width instead of stretching the card. */}
             <Link
               key={piece.slug}
               href={`/collections/${piece.slug}`}
